@@ -6,7 +6,7 @@ using System.Linq;
 using System.Globalization;
 using System.IO.Compression;
 
-namespace File-Manager.General
+namespace File_Manager.General
 {
     public class Organizer
     {
@@ -78,7 +78,7 @@ namespace File-Manager.General
 
             }
 
-            if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip" };
+            if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
          
             fileTitle = String.Format(folderStringFormat, zipDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
             ZipFile.CreateFromDirectory(targetDirectory, String.Format(folderStringFormat, zipDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy")));

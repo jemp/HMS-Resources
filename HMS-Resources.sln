@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File-Manager", "HMS-Manager\File-Manager.csproj", "{567DA170-D305-443D-992D-548FFB83F315}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File_Manager", "HMS-Manager\File_Manager.csproj", "{567DA170-D305-443D-992D-548FFB83F315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CClone-Manager", "CClone-Manager\CClone-Manager.csproj", "{07A730B2-78B6-4F25-928F-0356F1A2A72D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CClone_Manager", "CClone-Manager\CClone_Manager.csproj", "{07A730B2-78B6-4F25-928F-0356F1A2A72D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

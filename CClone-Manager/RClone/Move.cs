@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace File-Manager.RClone
+namespace File_Manager.RClone
 {
     static class Move
     {
