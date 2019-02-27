@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace File_Manager.ToolKit
+namespace ToolKit
 {
-    class ConnectionCheck
+    public class Class1
     {
     }
 }

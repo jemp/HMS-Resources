@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CClone_Manager", "CClone_Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File_Manager", "HMS_Manager\File_Manager.csproj", "{567DA170-D305-443D-992D-548FFB83F315}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit", "ToolKit\ToolKit.csproj", "{B266CE83-847E-405B-A126-350A57870B4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{567DA170-D305-443D-992D-548FFB83F315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{567DA170-D305-443D-992D-548FFB83F315}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{567DA170-D305-443D-992D-548FFB83F315}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B266CE83-847E-405B-A126-350A57870B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B266CE83-847E-405B-A126-350A57870B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B266CE83-847E-405B-A126-350A57870B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B266CE83-847E-405B-A126-350A57870B4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

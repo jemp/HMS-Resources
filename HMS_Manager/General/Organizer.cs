@@ -8,35 +8,15 @@ using System.IO.Compression;
 
 namespace File_Manager.General
 {
-    public class Organizer
+    public static class Organizer
     {
-        private String sourceDirectory;
-        private String targetDirectory;
-        private String zipDirectory;
-        private String folderFormat;
-        private String fileType;
-
-
-        public Organizer(String initSourceDirectory, String initTartgetDirectory, String initZipDirectory, String initfolderFormat,  String initFileType)
-        {
-            sourceDirectory = initSourceDirectory;
-            targetDirectory = initTartgetDirectory;
-            zipDirectory = initZipDirectory;
-            folderFormat = initfolderFormat;
-            fileType = initFileType;
-
-        }
         
-
-        public void createTimestampFolders()
+        public  static void createTimestampFolders(String sourceDirectory, String targetDirectory, String zipDirectory, String folderFormat, String fileType)
         {
-
-
             DirectoryInfo d = new DirectoryInfo(sourceDirectory);
             FileInfo[] Files = d.GetFiles("*avi"); //Getting Text files
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
-            String fileTitle = String.Empty;
             String folderStringFormat = String.Empty;
 
 
@@ -58,8 +38,6 @@ namespace File_Manager.General
 
                     if (!isNotFirst) { startDate = time; isNotFirst = true; };
 
-
-
                     if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", targetDirectory, time.Date.ToString())))
                     {
                         Directory.CreateDirectory(String.Format(@"{0}\{1}", targetDirectory, folderName));
@@ -73,32 +51,34 @@ namespace File_Manager.General
 
                     endDate = time;
 
-                    //foldersRequired.Add(Regex.Replace(file.Name, String.Format(@"(?<={0}).*", folderFormat), ""));
                 }
 
             }
 
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
-         
-            fileTitle = String.Format(folderStringFormat, zipDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
-            ZipFile.CreateFromDirectory(targetDirectory, String.Format(folderStringFormat, zipDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy")));
 
-            deleteFolderContents(targetDirectory);
-
+            compressTargetFolder(folderStringFormat, zipDirectory, startDate, endDate, targetDirectory);
+            deleteFolderContents(targetDirectory); //Cleanup
 
         }
 
-
-        private void deleteFolderContents(String directory)
+        public static void compressTargetFolder(String folderStringFormat, String zipDirectory, DateTime startDate, DateTime endDate, String targetDirectory)
         {
-       DirectoryInfo dInfo = new System.IO.DirectoryInfo(directory);
 
+            String fileTitle = String.Empty;
+
+            fileTitle = String.Format(folderStringFormat, zipDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
+            ZipFile.CreateFromDirectory(targetDirectory, String.Format(folderStringFormat, zipDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy")));
+           
+        }
+
+        private  static void deleteFolderContents(String directory)
+        {
+            DirectoryInfo dInfo = new System.IO.DirectoryInfo(directory);
             foreach (System.IO.DirectoryInfo subDirectory in dInfo.GetDirectories())
                 subDirectory.Delete(true);
         }
-
-    
-
+        
 
     }
 }
