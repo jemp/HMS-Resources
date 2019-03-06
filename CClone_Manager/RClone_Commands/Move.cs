@@ -14,11 +14,11 @@ namespace RClone_Manager.RClone_Commands
 
         public static async void moveFile(String rCloneDirectory, String sourceDirectory, String driveTargetDirectory, String fileExtenstion, int maxAttempts)
         {
-            int moveAttempts = 0; 
+            int moveAttempts = 0;
 
 
             DirectoryInfo d = new DirectoryInfo(sourceDirectory);
-            FileInfo[] files = d.GetFiles(fileExtenstion); //Getting Text files
+            FileInfo[] files = d.GetFiles(String.Format("*.{0}", fileExtenstion)); //Getting Text files
 
             if (Status.CheckForInternetConnection())
             {
@@ -30,7 +30,7 @@ namespace RClone_Manager.RClone_Commands
    
                     foreach (FileInfo file in files)
                     {
-                        Shell.runRCloneShell("Move", file.FullName, sourceDirectory, driveTargetDirectory);
+                        Shell.runRCloneShell("move", rCloneDirectory, file.FullName, driveTargetDirectory);
 
                     }
 

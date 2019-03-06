@@ -12,10 +12,10 @@ namespace RClone_Manager.Utilities
         {
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            //startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = startInfo.FileName = "cmd.exe";
-            startInfo.WorkingDirectory = String.Format(@"{0}", rCloneDirectory);
-            startInfo.Arguments = String.Format("/C \"rclone {0} {1} {2}\"", command, sourceDirectory, rCloneDirectory);
+            startInfo.WorkingDirectory = String.Format("{0}", rCloneDirectory);
+            startInfo.Arguments = String.Format("/C \"rclone {0} \"{1}\" {2}\"", command, sourceDirectory, driveTargetDirectory);
             process.StartInfo = startInfo;
 
             process.Start();
