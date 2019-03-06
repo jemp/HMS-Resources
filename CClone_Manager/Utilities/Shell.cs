@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CClone_Manager.Utilities
+namespace RClone_Manager.Utilities
 {
-    class Shell
+    public class Shell
     {
         public static void runRCloneShell(String command, String rCloneDirectory, String sourceDirectory, String driveTargetDirectory)
         {

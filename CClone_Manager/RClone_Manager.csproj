@@ -7,8 +7,8 @@
     <ProjectGuid>{07A730B2-78B6-4F25-928F-0356F1A2A72D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CClone_Manager</RootNamespace>
-    <AssemblyName>CClone_Manager</AssemblyName>
+    <RootNamespace>RClone_Manager</RootNamespace>
+    <AssemblyName>RClone_Manager</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ToolKit.Network_Tools;
-using CClone_Manager.Utilities;
+using RClone_Manager.Utilities;
 
-namespace CClone_Manager.RClone_Commands
+namespace RClone_Manager.RClone_Commands
 {
-    static class Move 
+    public static class Move 
     {
 
         public static async void moveFile(String rCloneDirectory, String sourceDirectory, String driveTargetDirectory, String fileExtenstion, int maxAttempts)

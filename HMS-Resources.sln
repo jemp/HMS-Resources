@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CClone_Manager", "CClone_Manager\CClone_Manager.csproj", "{07A730B2-78B6-4F25-928F-0356F1A2A72D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RClone_Manager", "CClone_Manager\RClone_Manager.csproj", "{07A730B2-78B6-4F25-928F-0356F1A2A72D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit", "ToolKit\ToolKit.csproj", "{B266CE83-847E-405B-A126-350A57870B4E}"
 EndProject
