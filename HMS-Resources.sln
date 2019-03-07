@@ -6,10 +6,21 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit", "ToolKit\ToolKit.csproj", "{B266CE83-847E-405B-A126-350A57870B4E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File_Manager", "File_Manager\File_Manager.csproj", "{567DA170-D305-443D-992D-548FFB83F315}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B266CE83-847E-405B-A126-350A57870B4E} = {B266CE83-847E-405B-A126-350A57870B4E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "Tester\Tester.csproj", "{0D38799F-2581-4A5B-BD45-82F940DA14CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{567DA170-D305-443D-992D-548FFB83F315} = {567DA170-D305-443D-992D-548FFB83F315}
+		{B266CE83-847E-405B-A126-350A57870B4E} = {B266CE83-847E-405B-A126-350A57870B4E}
+		{07A730B2-78B6-4F25-928F-0356F1A2A72D} = {07A730B2-78B6-4F25-928F-0356F1A2A72D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RClone_Manager", "Rclone_Manager\RClone_Manager.csproj", "{07A730B2-78B6-4F25-928F-0356F1A2A72D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B266CE83-847E-405B-A126-350A57870B4E} = {B266CE83-847E-405B-A126-350A57870B4E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
