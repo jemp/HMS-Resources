@@ -41,8 +41,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="ToolKit">
-      <HintPath>..\..\..\HMS Resources\Libraries\ToolKit.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\ToolKit\bin\Debug\ToolKit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
