@@ -14,7 +14,7 @@ namespace File_Manager.General
         public  static void createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
         {
             DirectoryInfo d = new DirectoryInfo(sourceDirectory);
-            FileInfo[] Files = d.GetFiles("*avi"); //Getting Text files
+            FileInfo[] Files = d.GetFiles(String.Format("*{0}", fileType)); //Getting Text files
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
             String folderStringFormat = String.Empty;
