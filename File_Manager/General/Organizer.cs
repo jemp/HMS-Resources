@@ -14,16 +14,20 @@ namespace File_Manager.General
         public  static void createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
         {
             DirectoryInfo d = new DirectoryInfo(sourceDirectory);
-            FileInfo[] Files = d.GetFiles(String.Format("*{0}", fileType)); //Getting Text files
+            FileInfo[] files = d.GetFiles(String.Format("*{0}", fileType)); //Getting Text files
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
             String folderStringFormat = String.Empty;
             sourceDirectory = String.Format(@"{0}{1}", sourceDirectory, "temp");
 
+            files = files.OrderBy(f => f.Name).ToArray();
+
+
             bool isNotFirst = false;
 
+           
 
-            foreach (FileInfo file in Files)
+            foreach (FileInfo file in files)
             {
                 if (Regex.IsMatch(file.Name, folderFormat) == true)
                 {
@@ -72,9 +76,6 @@ namespace File_Manager.General
         public static void compressTargetFolder(String folderStringFormat, String zipDirectory,String targetDirectory, DateTime startDate, DateTime endDate)
         {
 
-            String fileTitle = String.Empty;
-
-            fileTitle = String.Format(folderStringFormat, zipDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
             ZipFile.CreateFromDirectory(zipDirectory, String.Format(folderStringFormat, targetDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy")));
            
         }
