@@ -13,7 +13,7 @@ namespace Tester
         static void Main(string[] args)
         {
           
-            Organizer.createTimestampFolders("C:\\Test\\", "C:\\Test\\", @"(?:LIVCAM\.)(\d{8})(?:_)(\d{6})(?:\.*)", "avi");
+            Organizer.createTimestampFolders("C:\\rclone", "E:\\Temp\\Archive-Buffer\\", @"(?:LIVCAM\.)(\d{8})(?:_)(\d{6})(?:\.*)", "avi");
             //Move.moveFile(@"C:\rclone test\rclone-v1.46-windows-amd64", @"C:\rclone-test", @"HMS:/HMS-File-Management/Archive/Home-Surveillance/Test", "zip", 3);
 
         }

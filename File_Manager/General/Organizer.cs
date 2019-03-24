@@ -18,7 +18,7 @@ namespace File_Manager.General
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
             String folderStringFormat = String.Empty;
-            sourceDirectory = String.Format(@"{0}{1}", sourceDirectory, "temp");
+            String workingDirectory  = String.Format(@"{0}/{1}_buffer_temp",targetDirectory, System.IO.Path.GetFileName(sourceDirectory));
 
             files = files.OrderBy(f => f.Name).ToArray();
 
@@ -42,15 +42,15 @@ namespace File_Manager.General
 
                     if (!isNotFirst) { startDate = time; isNotFirst = true; };
 
-                    if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", sourceDirectory, time.Date.ToString())))
+                    if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", workingDirectory, time.Date.ToString())))
                     {
-                        Directory.CreateDirectory(String.Format(@"{0}\{1}", sourceDirectory, folderName));
+                        Directory.CreateDirectory(String.Format(@"{0}\{1}", workingDirectory, folderName));
                     }
 
-                    if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", sourceDirectory, folderName, file.Name)))
+                    if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)))
                     {
 
-                        File.Move(file.FullName, (String.Format(@"{0}\{1}\{2}", sourceDirectory, folderName, file.Name)));
+                        File.Move(file.FullName, (String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)));
                     }
 
                     endDate = time;
@@ -67,8 +67,8 @@ namespace File_Manager.General
 
 
 
-            compressTargetFolder(folderStringFormat, sourceDirectory, targetDirectory, startDate, endDate);
-            d = new DirectoryInfo(sourceDirectory); // cleanup
+            compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
+            d = new DirectoryInfo(workingDirectory); // cleanup
             d.Delete(true);
 
         }
