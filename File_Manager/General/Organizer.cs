@@ -69,6 +69,7 @@ namespace File_Manager.General
 
             compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
             d = new DirectoryInfo(workingDirectory); // cleanup
+            d.Attributes &= ~FileAttributes.ReadOnly;
             d.Delete(true);
 
         }
