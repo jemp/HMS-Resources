@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using System.IO.Compression;
+using System.Threading;
 
 namespace File_Manager.General
 {
@@ -68,9 +69,7 @@ namespace File_Manager.General
 
 
             compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
-            d = new DirectoryInfo(workingDirectory); // cleanup
-            d.Attributes &= ~FileAttributes.ReadOnly;
-            d.Delete(true);
+            deleteFolderContents(workingDirectory);
 
         }
 
@@ -81,11 +80,25 @@ namespace File_Manager.General
            
         }
 
-        private  static void deleteFolderContents(String directory)
+        private  static void deleteFolderContents(String path)
         {
-            DirectoryInfo dInfo = new System.IO.DirectoryInfo(directory);
-            foreach (System.IO.DirectoryInfo subDirectory in dInfo.GetDirectories())
-                subDirectory.Delete(true);
+                foreach (string directory in Directory.GetDirectories(path))
+                {
+                deleteFolderContents(directory);
+                }
+                try
+                {
+                    Directory.Delete(path, true);
+                }
+                catch (IOException)
+                {
+                    Directory.Delete(path, true);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    Directory.Delete(path, true);
+                }
+            
         }
         
 
