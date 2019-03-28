@@ -26,22 +26,27 @@ namespace File_Manager.General
 
             bool isNotFirst = false;
 
-           
 
-            foreach (FileInfo file in files)
+
+
+            for (int f = files.Count() - 1; f != 0; f--)
             {
+                 FileInfo file = files[f];
+
                 if (Regex.IsMatch(file.Name, folderFormat) == true)
                 {
                     Regex rege = new Regex(String.Format("{0}", folderFormat));
                     var results = rege.Matches(file.Name);
                     DateTime time = new DateTime();
-                   
+
                     String folderName = String.Empty;
                     DateTime.TryParseExact(String.Format("{0}", results[0].Groups[1]), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out time);
 
                     folderName = time.Date.ToString("MM-dd-yyyy");
 
                     if (!isNotFirst) { startDate = time; isNotFirst = true; };
+
+
 
                     if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", workingDirectory, time.Date.ToString())))
                     {
@@ -51,25 +56,26 @@ namespace File_Manager.General
                     if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)))
                     {
 
-                        File.Move(file.FullName, (String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)));
+
+                        File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)));
+                        File.Delete(file.FullName);
                     }
+
 
                     endDate = time;
 
                 }
 
 
-
             }
-
 
 
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
 
 
 
-            compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
-            Directory.Delete(workingDirectory, true);
+            //compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
+            //Directory.Delete(workingDirectory, true);
   
 
         }
