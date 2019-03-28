@@ -69,7 +69,8 @@ namespace File_Manager.General
 
 
             compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
-            deleteFolderContents(workingDirectory);
+            Directory.Delete(workingDirectory, true);
+  
 
         }
 
@@ -80,27 +81,6 @@ namespace File_Manager.General
            
         }
 
-        private  static void deleteFolderContents(String path)
-        {
-                foreach (string directory in Directory.GetDirectories(path))
-                {
-                deleteFolderContents(directory);
-                }
-                try
-                {
-                    Directory.Delete(path, true);
-                }
-                catch (IOException)
-                {
-                    Directory.Delete(path, true);
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    Directory.Delete(path, true);
-                }
-            
-        }
-        
 
     }
 }
