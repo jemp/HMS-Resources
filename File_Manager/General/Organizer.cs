@@ -11,17 +11,17 @@ namespace File_Manager.General
 {
     public static class Organizer
     {
-        
-        public  static void createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
+
+        public static void createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
         {
-            DirectoryInfo d = new DirectoryInfo(sourceDirectory);
-            FileInfo[] files = d.GetFiles(String.Format("*{0}", fileType)); //Getting Text files
+            DirectoryInfo sourceInfo = new DirectoryInfo(sourceDirectory);
+            FileInfo[] sourceFiles = sourceInfo.GetFiles(String.Format("*{0}", fileType)); //Getting Text files
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
             String folderStringFormat = String.Empty;
-            String workingDirectory  = String.Format(@"{0}/{1}_buffer_temp",targetDirectory, System.IO.Path.GetFileName(sourceDirectory));
+            String workingDirectory = String.Format(@"{0}/{1}_buffer_temp", targetDirectory, System.IO.Path.GetFileName(sourceDirectory));
 
-            files = files.OrderBy(f => f.Name).ToArray();
+            sourceFiles = sourceFiles.OrderBy(f => f.Name).ToArray();
 
 
             bool isNotFirst = false;
@@ -29,9 +29,8 @@ namespace File_Manager.General
 
 
 
-            for (int f = files.Count() - 1; f != 0; f--)
-            {
-                 FileInfo file = files[f];
+            foreach (FileInfo file in sourceFiles) {
+
 
                 if (Regex.IsMatch(file.Name, folderFormat) == true)
                 {
@@ -56,19 +55,18 @@ namespace File_Manager.General
                     if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)))
                     {
 
-
                         File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)));
-                        File.Delete(file.FullName);
+
                     }
-
-
                     endDate = time;
-
                 }
-
-
+                
             }
 
+            foreach (var sourceFile in sourceFiles)
+            {
+                sourceFile.Delete();
+            }
 
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
 
@@ -76,15 +74,15 @@ namespace File_Manager.General
 
             //compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
             //Directory.Delete(workingDirectory, true);
-  
+
 
         }
 
-        public static void compressTargetFolder(String folderStringFormat, String zipDirectory,String targetDirectory, DateTime startDate, DateTime endDate)
+        public static void compressTargetFolder(String folderStringFormat, String zipDirectory, String targetDirectory, DateTime startDate, DateTime endDate)
         {
 
             ZipFile.CreateFromDirectory(zipDirectory, String.Format(folderStringFormat, targetDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy")));
-           
+
         }
 
 

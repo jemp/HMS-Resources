@@ -25,7 +25,9 @@ namespace RClone_Manager.RClone_Commands
                 {
                     if (Status.CheckForInternetConnection())
                     {
-                        Shell.runRCloneShell("move", rCloneDirectory, file.FullName, driveTargetDirectory);
+                        String fullParameters = String.Format("\"{0}\" {1}\"", file.FullName, driveTargetDirectory);
+
+                        Shell.runRCloneShell(rCloneDirectory, "move", fullParameters);
                         break;
                     }
                     else
