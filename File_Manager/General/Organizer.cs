@@ -63,11 +63,7 @@ namespace File_Manager.General
                 
             }
 
-            foreach (var sourceFile in sourceFiles)
-            {
-                sourceFile.Delete();
-            }
-
+ 
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
 
 
