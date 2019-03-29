@@ -66,10 +66,7 @@ namespace File_Manager.General
  
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
 
-
-
-            //compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
-            //Directory.Delete(workingDirectory, true);
+            compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
 
 
         }
