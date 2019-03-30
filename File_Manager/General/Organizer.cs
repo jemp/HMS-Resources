@@ -12,7 +12,7 @@ namespace File_Manager.General
     public static class Organizer
     {
 
-        public static void createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
+        public static String createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
         {
             DirectoryInfo sourceInfo = new DirectoryInfo(sourceDirectory);
             FileInfo[] sourceFiles = sourceInfo.GetFiles(String.Format("*{0}", fileType)); //Getting Text files
@@ -66,16 +66,13 @@ namespace File_Manager.General
  
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
 
-            compressTargetFolder(folderStringFormat, workingDirectory, targetDirectory, startDate, endDate);
-
+            return String.Format(folderStringFormat, targetDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
 
         }
 
-        public static void compressTargetFolder(String folderStringFormat, String zipDirectory, String targetDirectory, DateTime startDate, DateTime endDate)
+        public static void compressTargetFolder(String zipDirectorySource, String zipDirectoryTarget)
         {
-
-            ZipFile.CreateFromDirectory(zipDirectory, String.Format(folderStringFormat, targetDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy")));
-
+            ZipFile.CreateFromDirectory(zipDirectorySource, zipDirectoryTarget);
         }
 
 
