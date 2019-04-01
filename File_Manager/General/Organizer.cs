@@ -12,6 +12,13 @@ namespace File_Manager.General
     public static class Organizer
     {
 
+
+        public static void compressAndRemoveTargetFolder(String zipDirectorySource, String zipDirectoryTarget)
+        {
+            ZipFile.CreateFromDirectory(zipDirectorySource, zipDirectoryTarget);
+            Directory.Delete(zipDirectorySource,true);
+        }
+
         public static String createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
         {
             DirectoryInfo sourceInfo = new DirectoryInfo(sourceDirectory);
@@ -19,16 +26,13 @@ namespace File_Manager.General
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
             String folderStringFormat = String.Empty;
-            String workingDirectory = String.Format(@"{0}/{1}_buffer_temp", targetDirectory, System.IO.Path.GetFileName(sourceDirectory));
+            String workingDirectory = getTempFolderPath(sourceDirectory, targetDirectory);
 
             sourceFiles = sourceFiles.OrderBy(f => f.Name).ToArray();
 
 
             bool isNotFirst = false;
-
-
-
-
+            
             foreach (FileInfo file in sourceFiles) {
 
 
@@ -70,10 +74,12 @@ namespace File_Manager.General
 
         }
 
-        public static void compressTargetFolder(String zipDirectorySource, String zipDirectoryTarget)
+
+        public static String getTempFolderPath(String sourceDirectory, String targetDirectory)
         {
-            ZipFile.CreateFromDirectory(zipDirectorySource, zipDirectoryTarget);
+            return String.Format(@"{0}\{1}_buffer_temp", targetDirectory, System.IO.Path.GetFileName(sourceDirectory));
         }
+
 
 
     }
