@@ -16,7 +16,7 @@ namespace File_Manager.General
         public static void compressAndRemoveTargetFolder(String zipDirectoryTarget)
         {
             String zipContainingFolder = Path.GetDirectoryName(zipDirectoryTarget);
-            String zipDirectorySource = String.Format(@"{0}\{1}",zipContainingFolder  , zipDumpTitle);
+            String zipDirectorySource = String.Format(@"{0}\{1}", zipContainingFolder, zipDumpTitle);
             ZipFile.CreateFromDirectory(zipDirectorySource, zipDirectoryTarget);
             Directory.Delete(zipContainingFolder, true);
         }
@@ -29,14 +29,15 @@ namespace File_Manager.General
             DateTime endDate = new DateTime();
             String folderStringFormat = String.Empty;
             String dynamicTempDirectory = getTempFolderPath(sourceDirectory, targetDirectory);
-            String zipDump = String.Format( @"{0}\{1}", dynamicTempDirectory, zipDumpTitle);
+            String zipDump = String.Format(@"{0}\{1}", dynamicTempDirectory, zipDumpTitle);
 
             sourceFiles = sourceFiles.OrderBy(f => f.Name).ToArray();
 
 
             bool isNotFirst = false;
-            
-            foreach (FileInfo file in sourceFiles) {
+
+            foreach (FileInfo file in sourceFiles)
+            {
 
 
                 if (Regex.IsMatch(file.Name, folderFormat) == true)
@@ -67,9 +68,9 @@ namespace File_Manager.General
                     }
                     endDate = time;
                 }
-                
+
             }
-           
+
 
 
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
