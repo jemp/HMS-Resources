@@ -11,12 +11,14 @@ namespace File_Manager.General
 {
     public static class Organizer
     {
+        private const String zipDumpTitle = "zip_Dump";
 
-
-        public static void compressAndRemoveTargetFolder(String zipDirectorySource, String zipDirectoryTarget)
+        public static void compressAndRemoveTargetFolder(String zipDirectoryTarget)
         {
+            String zipContainingFolder = Path.GetDirectoryName(zipDirectoryTarget);
+            String zipDirectorySource = String.Format(@"{0}\{1}",zipContainingFolder  , zipDumpTitle);
             ZipFile.CreateFromDirectory(zipDirectorySource, zipDirectoryTarget);
-            Directory.Delete(zipDirectorySource,true);
+            Directory.Delete(zipContainingFolder, true);
         }
 
         public static String createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
@@ -26,7 +28,8 @@ namespace File_Manager.General
             DateTime startDate = new DateTime();
             DateTime endDate = new DateTime();
             String folderStringFormat = String.Empty;
-            String workingDirectory = getTempFolderPath(sourceDirectory, targetDirectory);
+            String dynamicTempDirectory = getTempFolderPath(sourceDirectory, targetDirectory);
+            String zipDump = String.Format( @"{0}\{1}", dynamicTempDirectory, zipDumpTitle);
 
             sourceFiles = sourceFiles.OrderBy(f => f.Name).ToArray();
 
@@ -51,26 +54,27 @@ namespace File_Manager.General
 
 
 
-                    if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", workingDirectory, time.Date.ToString())))
+                    if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", zipDump, time.Date.ToString())))
                     {
-                        Directory.CreateDirectory(String.Format(@"{0}\{1}", workingDirectory, folderName));
+                        Directory.CreateDirectory(String.Format(@"{0}\{1}", zipDump, folderName));
                     }
 
-                    if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)))
+                    if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)))
                     {
 
-                        File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", workingDirectory, folderName, file.Name)));
+                        File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)));
 
                     }
                     endDate = time;
                 }
                 
             }
+           
 
- 
+
             if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
 
-            return String.Format(folderStringFormat, targetDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
+            return String.Format(folderStringFormat, dynamicTempDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
 
         }
 
