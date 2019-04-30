@@ -18,7 +18,7 @@ namespace File_Manager.General
             String zipContainingFolder = Path.GetDirectoryName(zipDirectoryTarget);
             String zipDirectorySource = String.Format(@"{0}\{1}", zipContainingFolder, zipDumpTitle);
             ZipFile.CreateFromDirectory(zipDirectorySource, zipDirectoryTarget);
-            Directory.Delete(zipContainingFolder, true);
+            Directory.Delete(zipDirectorySource, true);
         }
 
         public static String createTimestampFolders(String sourceDirectory, String targetDirectory, String folderFormat, String fileType)
@@ -73,7 +73,7 @@ namespace File_Manager.General
 
 
 
-            if (startDate != endDate) { folderStringFormat = "{0}/{1}_{2}.zip"; } else { folderStringFormat = "{0}/{1}.zip"; };
+            if (startDate != endDate) { folderStringFormat = @"{0}\{1}_{2}.zip"; } else { folderStringFormat = @"{0}\{1}.zip"; };
 
             return String.Format(folderStringFormat, dynamicTempDirectory, startDate.ToString("MM-dd-yyyy"), endDate.ToString("MM-dd-yyyy"));
 
