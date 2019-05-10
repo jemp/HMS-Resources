@@ -7,21 +7,20 @@ using RClone_Manager.Utilities;
 
 namespace RClone_Manager.RClone_Commands
 {
-   public static  class Delete
+    public static class Delete
     {
 
         public static void deleteFolderContents(String rCloneDirectory, String driveTargetDirectory)
         {
-            String fullParameters = String.Format("\"{0}\"",  driveTargetDirectory);
+            String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
             Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
         }
 
-        public static void emptyTrashFolder(String rCloneDirectory)
+        public static void emptyTrashFolder(String rCloneDirectory, String rCloneConfiguration)
         {
-
-                  String fullParameters = String.Format("{0}", " --drive - trashed - only--drive - use - trash = false--verbose = 2");
-                  Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
+            String fullParameters = String.Format("delete {0}: --drive-trashed-only --drive-use-trash=false --verbose=2",rCloneConfiguration);
+            Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
         }
 

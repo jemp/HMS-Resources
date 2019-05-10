@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RClone_Manager", "Rclone_Ma
 		{B266CE83-847E-405B-A126-350A57870B4E} = {B266CE83-847E-405B-A126-350A57870B4E}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{7382B38A-1767-4F98-B77D-CF193DDB8A7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{AB0A4CF2-8B0B-41FD-B4B7-9DD758AF76BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B266CE83-847E-405B-A126-350A57870B4E} = {7382B38A-1767-4F98-B77D-CF193DDB8A7F}
+		{567DA170-D305-443D-992D-548FFB83F315} = {7382B38A-1767-4F98-B77D-CF193DDB8A7F}
+		{0D38799F-2581-4A5B-BD45-82F940DA14CF} = {7382B38A-1767-4F98-B77D-CF193DDB8A7F}
+		{07A730B2-78B6-4F25-928F-0356F1A2A72D} = {7382B38A-1767-4F98-B77D-CF193DDB8A7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97C09C2B-A23A-4C57-A4E4-1934222C5150}
