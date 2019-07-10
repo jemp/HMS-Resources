@@ -19,7 +19,7 @@ namespace RClone_Manager.RClone_Commands
 
         public static void emptyTrashFolder(String rCloneDirectory, String rCloneConfiguration)
         {
-            String fullParameters = String.Format("delete {0}: --drive-trashed-only --drive-use-trash=false --verbose=2",rCloneConfiguration);
+            String fullParameters = String.Format("{0}: --drive-trashed-only --drive-use-trash=false --verbose=2",rCloneConfiguration);
             Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
         }

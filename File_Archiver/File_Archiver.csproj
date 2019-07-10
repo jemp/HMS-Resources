@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Archive\Archive.cs" />
+    <Compile Include="Configuration\Config.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +59,10 @@
     <ProjectReference Include="..\Rclone_Manager\RClone_Manager.csproj">
       <Project>{07a730b2-78b6-4f25-928f-0356f1a2a72d}</Project>
       <Name>RClone_Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ToolKit\ToolKit.csproj">
+      <Project>{b266ce83-847e-405b-a126-350a57870b4e}</Project>
+      <Name>ToolKit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
