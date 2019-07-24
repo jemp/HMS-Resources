@@ -29,7 +29,7 @@ namespace File_Archiver.Archive
         /// <param name="fileNameRegex">The Regex of what the file name looks like</param>
         /// <param name="fileExtenstion">Extension of file that we are looking for</param>
         /// <param name="gDriveName">Name of the g-Drive?</param>
-        public static void archiveFolder(String rCloneLocation, String gDriveDirectory, String localDropStream, String localArchiverBuffer, String remoteTarget, String remoteArchive, String fileNameRegex, String fileExtenstion, String gDrvieName)
+        public static void archiveFolder(String rCloneLocation, String gDriveDirectory, String localDropStream, String localArchiverBuffer, String remoteTarget, String remoteArchive, String fileNameRegex, String fileExtenstion, String gDriveName)
         {
 
             String localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
@@ -44,7 +44,7 @@ namespace File_Archiver.Archive
 
             Directory.Delete(localTempFolder, true);
 
-            Delete.emptyTrashFolder(rCloneLocation, gDrvieName);
+            Delete.emptyTrashFolder(rCloneLocation, gDriveName);
 
         }
 
