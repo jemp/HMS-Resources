@@ -6,6 +6,7 @@ using System.Linq;
 using System.Globalization;
 using System.IO.Compression;
 using System.Threading;
+using File_Manager.Diagnostics;
 
 namespace File_Manager.General
 {
@@ -36,39 +37,47 @@ namespace File_Manager.General
 
             bool isNotFirst = false;
 
-            foreach (FileInfo file in sourceFiles)
+            try
             {
 
-
-                if (Regex.IsMatch(file.Name, folderFormat) == true)
+                foreach (FileInfo file in sourceFiles)
                 {
-                    Regex rege = new Regex(String.Format("{0}", folderFormat));
-                    var results = rege.Matches(file.Name);
-                    DateTime time = new DateTime();
-
-                    String folderName = String.Empty;
-                    DateTime.TryParseExact(String.Format("{0}", results[0].Groups[1]), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out time);
-
-                    folderName = time.Date.ToString("MM-dd-yyyy");
-
-                    if (!isNotFirst) { startDate = time; isNotFirst = true; };
 
 
-
-                    if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", zipDump, time.Date.ToString())))
+                    if (Regex.IsMatch(file.Name, folderFormat) == true)
                     {
-                        Directory.CreateDirectory(String.Format(@"{0}\{1}", zipDump, folderName));
+                        Regex rege = new Regex(String.Format("{0}", folderFormat));
+                        var results = rege.Matches(file.Name);
+                        DateTime time = new DateTime();
+
+                        String folderName = String.Empty;
+                        DateTime.TryParseExact(String.Format("{0}", results[0].Groups[1]), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out time);
+
+                        folderName = time.Date.ToString("MM-dd-yyyy");
+
+                        if (!isNotFirst) { startDate = time; isNotFirst = true; };
+
+
+
+                        if (!System.IO.Directory.Exists(String.Format(@"{0}\{1}", zipDump, time.Date.ToString())))
+                        {
+                            Directory.CreateDirectory(String.Format(@"{0}\{1}", zipDump, folderName));
+                        }
+
+                        if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)))
+                        {
+
+                            File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)));
+
+                        }
+                        endDate = time;
                     }
 
-                    if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)))
-                    {
-
-                        File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)));
-
-                    }
-                    endDate = time;
                 }
-
+            }
+            catch(Exception ex)
+            {
+    
             }
 
 
