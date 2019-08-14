@@ -9,18 +9,18 @@ namespace File_Manager.Diagnostics
     /// <summary>
     /// Custom Exception for archiveFolder Functionality
     /// </summary>
-    public class ArchiveFolderException : Exception
+    public class OrganizerException : Exception
     {
-        public ArchiveFolderException()
+        public OrganizerException()
         {
         }
 
-        public ArchiveFolderException(string message)
+        public OrganizerException(string message)
             : base(message)
         {
         }
 
-        public ArchiveFolderException(string message, Exception inner)
+        public OrganizerException(string message, Exception inner)
             : base(message, inner)
         {
         }

@@ -31,20 +31,28 @@ namespace File_Archiver.Archive
         /// <param name="gDriveName">Name of the g-Drive?</param>
         public static void archiveFolder(String rCloneLocation, String gDriveDirectory, String localDropStream, String localArchiverBuffer, String remoteTarget, String remoteArchive, String fileNameRegex, String fileExtenstion, String gDriveName)
         {
+            try
+            {
+                ///Let's get a temperary name for the temperary folder
+                String localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
+                ///Where will this zip file be located locally>
+                String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileNameRegex, fileExtenstion);
 
-            String localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
+                Delete.deleteFolderContents(rCloneLocation, remoteTarget);
 
-            String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileNameRegex, fileExtenstion);
+                Management.killProcess(Configuration.Config.cloudProcessName);
 
-            Delete.deleteFolderContents(rCloneLocation, remoteTarget);
+                Organizer.compressAndRemoveTargetFolder(localZipDestination);
 
-            Management.killProcess(Configuration.Config.cloudProcessName);
-         
-            Organizer.compressAndRemoveTargetFolder(localZipDestination);
+                Directory.Delete(localTempFolder, true);
 
-            Directory.Delete(localTempFolder, true);
+                Delete.emptyTrashFolder(rCloneLocation, gDriveName);
+            }
 
-            Delete.emptyTrashFolder(rCloneLocation, gDriveName);
+            catch(Exception e)
+            {
+
+            }
 
         }
 
