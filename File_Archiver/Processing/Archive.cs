@@ -82,7 +82,7 @@ namespace File_Archiver.Processing
                 Delete.emptyTrashFolder(rCloneLocation, gDriveName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
-                Logger.Info(String.Format("{0} - Elasped time:{1}", "Timer has successully been ran!", localTempFolder));
+                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", localTempFolder));
 
 
             }
