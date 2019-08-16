@@ -32,6 +32,7 @@ namespace File_Archiver.Processing
         /// <param name="gDriveName">Name of the g-Drive?</param>
         /// 
 
+        ///NLOG Plugin - Configurable through config
         private static readonly Logger Logger =LogManager.GetCurrentClassLogger();
 
 
@@ -73,7 +74,7 @@ namespace File_Archiver.Processing
                 Logger.Info("Successfully compressed and removed folder!");
 
                 ///Delete the local folder
-                Logger.Info(String.Format("{0}:{1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
+                Logger.Info(String.Format("{0}: {1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
                 Directory.Delete(localTempFolder, true);
                 Logger.Info("Successfully deleted the local temp folder!");
 
@@ -82,7 +83,7 @@ namespace File_Archiver.Processing
                 Delete.emptyTrashFolder(rCloneLocation, gDriveName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
-                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", localTempFolder));
+                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.ElapsedMilliseconds.ToString();));
 
 
             }
