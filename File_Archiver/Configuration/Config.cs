@@ -12,6 +12,7 @@ namespace File_Archiver.Configuration
 
         public static string driveProfileName { get; set; } = ConfigurationManager.AppSettings["DriveProfileName"];
         public static string cloudProcessName { get; set; } = ConfigurationManager.AppSettings["cloudProcessName"];
+        public static string cloudProcessPath { get; set; } = ConfigurationManager.AppSettings[@"C:\Program Files\Google\Drive\googledrivesync.exe"];
 
 
 

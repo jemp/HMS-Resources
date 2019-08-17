@@ -63,9 +63,9 @@ namespace File_Archiver.Processing
 
 
                 ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
-                Logger.Info("Killing cloud process...");
-                Management.killProcess(Configuration.Config.cloudProcessName);
-                Logger.Info("Process successully killed!");
+                Logger.Info("Restarting process");
+                Management.restartProcess(Configuration.Config.cloudProcessName, Configuration.Config.cloudProcessPath);
+                Logger.Info("Process successully restarted!");
 
 
                 ///Compress / Remove the folder to be archived
@@ -83,7 +83,7 @@ namespace File_Archiver.Processing
                 Delete.emptyTrashFolder(rCloneLocation, gDriveName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
-                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.ElapsedMilliseconds.ToString();));
+                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.ElapsedMilliseconds.ToString()));
 
 
             }
