@@ -9,6 +9,8 @@ using ToolKit.Applications;
 using System.IO;
 using System.Diagnostics;
 using NLog;
+using File_Manager.Diagnostics;
+using RClone_Manager.Diagnostics;
 
 namespace File_Archiver.Processing
 {
@@ -36,15 +38,16 @@ namespace File_Archiver.Processing
         private static readonly Logger Logger =LogManager.GetCurrentClassLogger();
 
 
-        public static void archiveFolder(String rCloneLocation, String gDriveDirectory, String localDropStream, String localArchiverBuffer, String remoteTarget, String remoteArchive, String fileNameRegex, String fileExtenstion, String gDriveName)
+        public static void archiveFolder(String rCloneDirectory, String gDriveDirectory, String localDropStream, String localArchiverBuffer, String remoteTarget, String remoteArchive, String remoteDriveFolderPath , String fileNameRegex, String fileExtenstion)
         {
+
+            Stopwatch watch = Stopwatch.StartNew();
+
             try
             {
-
-
-
+                
                 ///Timer for diagnosing
-                 Stopwatch watch = Stopwatch.StartNew();
+                 
                 String elaspedTimer;
 
                 ///Let's get a temperary name for the temperary folder
@@ -57,8 +60,8 @@ namespace File_Archiver.Processing
                 String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileNameRegex, fileExtenstion);
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
 
-                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, gDriveName));
-                elaspedTimer = Delete.deleteFolderContents(rCloneLocation, remoteTarget);
+                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDriveFolderPath));
+                elaspedTimer = Delete.deleteFolderContents(rCloneDirectory, remoteDriveFolderPath);
                 Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
 
 
@@ -73,14 +76,19 @@ namespace File_Archiver.Processing
                 Organizer.compressAndRemoveTargetFolder(localZipDestination);
                 Logger.Info("Successfully compressed and removed folder!");
 
+                ///Moving Zipped file to the cloud storage
+                Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteDriveFolderPath));
+                elaspedTimer = Move.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Configuration.Config.compressionFormat, Configuration.Config.connectionAttempts);
+                Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
+
                 ///Delete the local folder
                 Logger.Info(String.Format("{0}: {1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
                 Directory.Delete(localTempFolder, true);
                 Logger.Info("Successfully deleted the local temp folder!");
 
                 ///Delete the cloud folder
-                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Emptying Cloud Folder", localTempFolder,gDriveName));
-                Delete.emptyTrashFolder(rCloneLocation, gDriveName);
+                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Emptying Cloud Folder", localTempFolder,remoteDriveFolderPath));
+                Delete.emptyTrashFolder(rCloneDirectory, remoteDriveFolderPath);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
                 Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.ElapsedMilliseconds.ToString()));
@@ -88,9 +96,20 @@ namespace File_Archiver.Processing
 
             }
 
+            catch(OrganizerException e)
+            {
+                Logger.Error(e, String.Format("{0} - {1} (Elapsed time: {2} ", "Error while prepping files before transfer", e.Message, watch.Elapsed.ToString()));
+            }
+            catch(Rclone_Move_Exception e)
+            {
+
+                Logger.Error(e, String.Format("{0} - {1} (Elapsed time: {2} ", "Error while transfering file to the cloud", e.Message, watch.Elapsed.ToString()));
+
+            }
+
             catch(Exception e)
             {
-                Logger.Error(e, String.Format("{0} - {1}","Error while Archiving",e.Message));
+                Logger.Error(e, String.Format("{0} - {1} (Elapsed time: {2} ", "Error while Archiving", e.Message, watch.Elapsed.ToString()));
             }
 
         }
