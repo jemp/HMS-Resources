@@ -134,12 +134,18 @@ namespace File_Manager.General
             }
             catch (FormatException e)
             {
-                throw new OrganizerException("Encountered an unexpected format while processessing files for timestamps", e.InnerException);
+                throw new OrganizerException("Exception encountered  while processessing files for timestamps", e.InnerException);
             }
             catch (IOException e)
             {
-                throw new OrganizerException("Encountered an issue while processing folders/files for timestamp folders", e.InnerException);
+                throw new OrganizerException("Exception encountered  while processing folders/files for timestamp folders", e.InnerException);
             }
+
+            catch (Exception e)
+            {
+                throw new OrganizerException("Exception encountered  while running createTimestampFolders", e.InnerException);
+            }
+
 
 
 

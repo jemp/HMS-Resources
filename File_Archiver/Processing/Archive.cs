@@ -38,7 +38,7 @@ namespace File_Archiver.Processing
         private static readonly Logger Logger =LogManager.GetCurrentClassLogger();
 
 
-        public static void archiveFolder(String rCloneDirectory, String gDriveDirectory, String localDropStream, String localArchiverBuffer, String remoteTarget, String remoteArchive, String remoteDriveFolderPath , String fileNameRegex, String fileExtenstion)
+        public static void archiveFolder(String rCloneDirectory, String gDriveDirectory, String localDropStream, String localArchiverBuffer, String remoteTarget, String remoteArchive, String remoteDriveFolderPath , String fileFormatNameRegex, String fileExtenstion)
         {
 
             Stopwatch watch = Stopwatch.StartNew();
@@ -57,7 +57,7 @@ namespace File_Archiver.Processing
 
                 ///Where will this zip file be located locally
                 Logger.Info("Creating Time-Stamped folders...");
-                String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileNameRegex, fileExtenstion);
+                String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
 
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDriveFolderPath));
@@ -98,18 +98,18 @@ namespace File_Archiver.Processing
 
             catch(OrganizerException e)
             {
-                Logger.Error(e, String.Format("{0} - {1} (Elapsed time: {2} ", "Error while prepping files before transfer", e.Message, watch.Elapsed.ToString()));
+                Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2} ", "Error while prepping files before transfer", e.Message, watch.Elapsed.ToString()));
             }
             catch(Rclone_Move_Exception e)
             {
 
-                Logger.Error(e, String.Format("{0} - {1} (Elapsed time: {2} ", "Error while transfering file to the cloud", e.Message, watch.Elapsed.ToString()));
+                Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2}", "Error while transfering file to the cloud", e.Message, watch.Elapsed.ToString()));
 
             }
 
             catch(Exception e)
             {
-                Logger.Error(e, String.Format("{0} - {1} (Elapsed time: {2} ", "Error while Archiving", e.Message, watch.Elapsed.ToString()));
+                Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2} ", "Error while Archiving", e.Message, watch.Elapsed.ToString()));
             }
 
         }
