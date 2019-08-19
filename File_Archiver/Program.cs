@@ -16,9 +16,9 @@ namespace File_Archiver
         {
             try
             {
+                Logger.Info("Starting archive process!");
 
-           
-            Archive.archiveFolder(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[0], args[0]);
+                Archive.archiveFolder(@args[0], @args[1], @args[2], @args[3], @args[4], @args[5], @args[6]);
 
             }
             catch(IndexOutOfRangeException e)
