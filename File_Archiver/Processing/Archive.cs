@@ -66,8 +66,9 @@ namespace File_Archiver.Processing
 
 
                 ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
-                Logger.Info("Restarting process");
-                Management.restartProcess(Configuration.Config.cloudProcessName, Configuration.Config.cloudProcessPath);
+
+                Logger.Info(String.Format("{0} - cloudProcessName: {1} cloudProcessPath: {2}", "Restarting Process", Config.cloudProcessName, Config.cloudProcessPath));
+                Management.restartProcess(Config.cloudProcessName, Config.cloudProcessPath);
                 Logger.Info("Process successully restarted!");
 
 

@@ -69,7 +69,7 @@ namespace RClone_Manager.RClone_Commands
 
                 }
                 ///Return elapse timer in string format
-                return watch.ElapsedMilliseconds.ToString();
+                return watch.Elapsed.ToString();
             }
             catch (Exception e)
             {

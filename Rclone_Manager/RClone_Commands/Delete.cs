@@ -27,7 +27,7 @@ namespace RClone_Manager.RClone_Commands
             Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
             ///Return timer in string format
-            return watch.ElapsedMilliseconds.ToString();
+            return watch.Elapsed.ToString();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace RClone_Manager.RClone_Commands
             Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
             ///Return timer in string format
-            return watch.ElapsedMilliseconds.ToString();
+            return watch.Elapsed.ToString();
         }
 
 
