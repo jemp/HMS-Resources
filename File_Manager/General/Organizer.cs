@@ -108,6 +108,7 @@ namespace File_Manager.General
                             Directory.CreateDirectory(String.Format(@"{0}\{1}", zipDump, folderName));
                         }
 
+                        ///Copy the file over - If it already exists, let's replace that bad boy!
                             File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)),true);
 
 
