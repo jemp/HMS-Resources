@@ -54,7 +54,7 @@ namespace File_Archiver.Processing
                 Logger.Info("Getting Temparary Folder... ");
                 String localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
                 Logger.Info(String.Format("{0} - {1}", "Temparary Folder Retrieved!",localTempFolder));
-
+                
                 ///Where will this zip file be located locally
                 Logger.Info("Creating Time-Stamped folders...");
                 String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
@@ -100,17 +100,20 @@ namespace File_Archiver.Processing
             catch(OrganizerException e)
             {
                 Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2} ", "Error while prepping files before transfer", e.Message, watch.Elapsed.ToString()));
+                Logger.Trace(e.StackTrace);
             }
             catch(Rclone_Move_Exception e)
             {
 
                 Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2}", "Error while transfering file to the cloud", e.Message, watch.Elapsed.ToString()));
-
+                Logger.Trace(e.StackTrace);
             }
 
             catch(Exception e)
             {
+               
                 Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2} ", "Error while Archiving", e.Message, watch.Elapsed.ToString()));
+                Logger.Trace(e.StackTrace);
             }
 
         }

@@ -38,12 +38,12 @@ namespace File_Manager.General
 
             catch(IOException e)
             {
-                throw new OrganizerException("Exception encountered while compressing archived folders", e.InnerException);
+                throw new OrganizerException("Exception encountered while compressing archived folders", e);
             }
 
             catch (ArgumentException e)
             {
-                throw new OrganizerException("Exception encountered while processing arguements for archive folder compression", e.InnerException);
+                throw new OrganizerException("Exception encountered while processing arguements for archive folder compression", e);
             }
         }
 
@@ -108,13 +108,8 @@ namespace File_Manager.General
                             Directory.CreateDirectory(String.Format(@"{0}\{1}", zipDump, folderName));
                         }
 
-                        ///Aslong as the file doesn't exist in the destination, copy it!
-                        if (!Directory.Exists(String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)))
-                        {
+                            File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)),true);
 
-                            File.Copy(file.FullName, (String.Format(@"{0}\{1}\{2}", zipDump, folderName, file.Name)));
-
-                        }
 
                         endDate = time; ///Finally, set the end date to the last folder's titled date
                     }
@@ -130,20 +125,21 @@ namespace File_Manager.General
             }
             catch(ArgumentException e)
             {
-                throw new OrganizerException("Exception encountered while processessing files for timestamp folders",e.InnerException);
+                throw new OrganizerException("Exception encountered while processessing files for timestamp folders",e);
             }
             catch (FormatException e)
             {
-                throw new OrganizerException("Exception encountered  while processessing files for timestamps", e.InnerException);
+                throw new OrganizerException("Exception encountered  while processessing files for timestamps", e);
             }
             catch (IOException e)
             {
-                throw new OrganizerException("Exception encountered  while processing folders/files for timestamp folders", e.InnerException);
+                throw new OrganizerException("Exception encountered  while processing folders/files for timestamp folders", e);
             }
 
             catch (Exception e)
             {
-                throw new OrganizerException("Exception encountered  while running createTimestampFolders", e.InnerException);
+           
+                throw new OrganizerException("Exception encountered  while running createTimestampFolders", e);
             }
 
 

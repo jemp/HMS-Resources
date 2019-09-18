@@ -73,7 +73,7 @@ namespace RClone_Manager.RClone_Commands
             }
             catch (Exception e)
             {
-                throw new Rclone_Move_Exception(e.Message, e.InnerException);
+                throw new Rclone_Move_Exception(e.Message,e);
 
             }
            
