@@ -14,8 +14,10 @@ namespace RClone_Manager.Utilities
         /// <param name="rCloneDirectory">Where is the rclone program located?</param>
         /// <param name="command">What command should be initiate</param>
         /// <param name="parameters">What are the parameters for the command?</param>
-        public static void runRCloneShell(String rCloneDirectory, String command, String parameters)
+        public static String runRCloneShell(String rCloneDirectory, String command, String parameters)
         {
+
+            String commandOutput = String.Empty;
             ///Let's set up the command process
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -27,10 +29,14 @@ namespace RClone_Manager.Utilities
             ///Pass arguements
             startInfo.Arguments = String.Format("/C \"rclone {0} {1}", command, parameters);
 
+
             //Finally, after everything is set, start the process until exit
             process.StartInfo = startInfo;
             process.Start();
+            commandOutput = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
+
+            return commandOutput;
         }
 
 

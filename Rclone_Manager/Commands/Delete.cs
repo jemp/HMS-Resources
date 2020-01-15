@@ -43,6 +43,8 @@ namespace RClone_Manager.Commands
             String fullParameters = String.Format("{0}: --drive-trashed-only --drive-use-trash=false --verbose=2",rCloneConfiguration);
             Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
+
+
             ///Return timer in string format
             return watch.Elapsed.ToString();
         }

@@ -26,6 +26,8 @@ namespace RClone_Manager.Commands
             String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
             Shell.runRCloneShell(rCloneDirectory, "ls", fullParameters);
 
+
+
             ///Return timer in string format
             return watch.Elapsed.ToString();
         }
