@@ -9,7 +9,7 @@ using RClone_Manager.Utilities;
 using RClone_Manager.Diagnostics;
 using System.Diagnostics;
 
-namespace RClone_Manager.RClone_Commands
+namespace RClone_Manager.Commands
 {
     /// <summary>
     /// This class is reponsible for all move operations inside of RClone

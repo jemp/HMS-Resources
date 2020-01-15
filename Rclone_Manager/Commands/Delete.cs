@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RClone_Manager.Utilities;
 
-namespace RClone_Manager.RClone_Commands
+namespace RClone_Manager.Commands
 {
     public static class Delete
     {

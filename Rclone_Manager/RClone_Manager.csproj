@@ -45,8 +45,9 @@
   <ItemGroup>
     <Compile Include="Diagnostics\Exceptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RClone_Commands\Delete.cs" />
-    <Compile Include="RClone_Commands\Move.cs" />
+    <Compile Include="Commands\Delete.cs" />
+    <Compile Include="Commands\Directory.cs" />
+    <Compile Include="Commands\Move.cs" />
     <Compile Include="Utilities\Shell.cs" />
   </ItemGroup>
   <ItemGroup />
