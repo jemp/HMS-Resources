@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace RClone_Manager.Commands
         /// <param name="rCloneDirectory"></param>
         /// <param name="driveTargetDirectory"></param>
         /// <returns></returns>
-        public static String getFilesStatsInDirectory(String rCloneDirectory, String driveTargetDirectory)
+        public static void getFilesStatsInDirectory(String rCloneDirectory, String driveTargetDirectory, out String timeElapsed, out String shellOutput  )
         {
 
             ///Timer, for diagnostics
@@ -24,13 +25,18 @@ namespace RClone_Manager.Commands
 
             ///rClone console commands
             String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
-            Shell.runRCloneShell(rCloneDirectory, "ls", fullParameters);
+           shellOutput =  Shell.runRCloneShell(rCloneDirectory, "lsl", fullParameters);
 
 
 
+            timeElapsed = watch.Elapsed.ToString();
             ///Return timer in string format
-            return watch.Elapsed.ToString();
+
         }
+
+
+        
+        
 
 
 
