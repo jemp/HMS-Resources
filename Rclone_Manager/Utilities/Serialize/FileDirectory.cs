@@ -10,10 +10,10 @@ namespace RClone_Manager.Utilities.Serialize
     public class FileDirectory
     {
 
-        public static List<FileStream> serializeDirectory()
+        public static List<FileInfo> serializeDirectory(String directorySource)
         {
 
-
+            return null;
 
 
         }

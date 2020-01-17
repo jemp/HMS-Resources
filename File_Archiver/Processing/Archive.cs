@@ -12,6 +12,7 @@ using NLog;
 using File_Manager.Diagnostics;
 using RClone_Manager.Diagnostics;
 using File_Archiver.Configuration;
+using RClone_Manager.Commands;
 
 namespace File_Archiver.Processing
 {
@@ -76,6 +77,8 @@ namespace File_Archiver.Processing
                 Logger.Info(String.Format("{0}: {1}", "Compress and removing target folder to the following location", localTempFolder));
                 Organizer.compressAndRemoveTargetFolder(localZipDestination);
                 Logger.Info("Successfully compressed and removed folder!");
+
+                ///Delete any files in cloud over threshold
 
                 ///Moving Zipped file to the cloud storage
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
