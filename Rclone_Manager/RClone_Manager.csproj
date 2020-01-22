@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ByteSize, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ByteSize.2.0.0\lib\net45\ByteSize.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,10 +52,12 @@
     <Compile Include="Commands\Directory.cs" />
     <Compile Include="Commands\Move.cs" />
     <Compile Include="Utilities\Serialize\FileDirectory.cs" />
-    <Compile Include="Utilities\Serialize\Regex\Directory.cs" />
+    <Compile Include="Utilities\Serialize\Expressions\Directory.cs" />
     <Compile Include="Utilities\Shell.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
