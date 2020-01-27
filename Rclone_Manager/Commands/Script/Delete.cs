@@ -50,5 +50,25 @@ namespace RClone_Manager.Commands
         }
 
 
+      /// <summary>
+      /// Will remove any files in specified cloud directory that is over the specified threshold
+      /// </summary>
+      /// <param name="rCloneDirectory"></param>
+      /// <param name="cloudDirectory"></param>
+      /// <returns></returns>
+        public static String removeFilesOverThreshold(String rCloneDirectory, String cloudDirectory)
+        {
+
+            ///Timer, for diagnostics
+            Stopwatch watch = Stopwatch.StartNew();
+
+          
+
+
+            ///Return timer in string format
+            return watch.Elapsed.ToString();
+        }
+
+
     }
 }

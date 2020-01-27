@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace RClone_Manager.Utilities.Serialize.Expressions
         {
@@ -47,7 +48,7 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
         /// <summary>
         /// Object for storing basic information for Cloud File Information
         /// </summary>
-        public class FileCloudInfo
+        public class FileCloudInfo : IEnumerable<FileCloudInfo>
         {
             /// <summary>
             /// Length of the file (in bytes)
@@ -62,6 +63,9 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             /// </summary>
             public String FilePath { get; }
 
+
+            List<FileCloudInfo> mylist = new List<FileCloudInfo>();
+
             /// <summary>
             /// Initialize the FileCLoudInfo Object
             /// </summary>
@@ -75,8 +79,24 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
                 FilePath = initFilePath;
 
             }
-           
-          
+
+            public FileCloudInfo()
+            {
+         
+
+            }
+
+            public IEnumerator<FileCloudInfo> GetEnumerator()
+            {
+                return mylist.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return this.GetEnumerator();
+            }
+
+         
         }
 
 

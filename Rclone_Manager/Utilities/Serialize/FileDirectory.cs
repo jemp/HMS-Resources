@@ -14,9 +14,11 @@ namespace RClone_Manager.Utilities.Serialize
         public static List<FileCloudInfo> serializeDirectory(String directorySource)
         {
 
-            ///test.Split(new string[] {"\n", "\r\n"}, StringSplitOptions.RemoveEmptyEntries);
+            List<string> directoryList = directorySource.Split(',').ToList();
+            List<FileCloudInfo> toReturn = new List<FileCloudInfo>();
+           toReturn.AddRange(directoryList.Select(x => Expressions.Directory.modifiedTimeSizePath(x)));
 
-            return null;
+            return toReturn;
 
 
         }

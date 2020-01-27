@@ -48,15 +48,18 @@
   <ItemGroup>
     <Compile Include="Diagnostics\Exceptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\Delete.cs" />
-    <Compile Include="Commands\Directory.cs" />
-    <Compile Include="Commands\Move.cs" />
+    <Compile Include="Commands\Script\Delete.cs" />
+    <Compile Include="Commands\Script\Directory.cs" />
+    <Compile Include="Commands\Script\Move.cs" />
     <Compile Include="Utilities\Serialize\FileDirectory.cs" />
     <Compile Include="Utilities\Serialize\Expressions\Directory.cs" />
     <Compile Include="Utilities\Shell.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utilities\NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

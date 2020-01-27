@@ -79,6 +79,9 @@ namespace File_Archiver.Processing
                 Logger.Info("Successfully compressed and removed folder!");
 
                 ///Delete any files in cloud over threshold
+                
+                
+                Organizer.
 
                 ///Moving Zipped file to the cloud storage
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
