@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RClone_Manager.Commands
 {
-    class Directory
+    public class Directory
     {
         /// <summary>
         /// Will retrieve a whole folder's contents on the cloud, along with file sizes
@@ -17,7 +17,7 @@ namespace RClone_Manager.Commands
         /// <param name="rCloneDirectory"></param>
         /// <param name="driveTargetDirectory"></param>
         /// <returns></returns>
-        public static void getFilesStatsInDirectory(String rCloneDirectory, String driveTargetDirectory, out String timeElapsed, out String shellOutput  )
+        public static string getFilesStatsInDirectory(String rCloneDirectory, String driveTargetDirectory)
         {
 
             ///Timer, for diagnostics
@@ -25,12 +25,13 @@ namespace RClone_Manager.Commands
 
             ///rClone console commands
             String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
-           shellOutput =  Shell.runRCloneShell(rCloneDirectory, "lsl", fullParameters);
+            String shellOutput =  Shell.runRCloneShell(rCloneDirectory, "lsl", fullParameters);
 
             FileInfo file = new FileInfo(null);
         
 
-            timeElapsed = watch.Elapsed.ToString();
+         
+            return shellOutput;
             ///Return timer in string format
 
         }

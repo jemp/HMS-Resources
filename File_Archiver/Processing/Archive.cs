@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RClone_Manager.RClone_Commands;
 using File_Manager.General;
 using ToolKit.Applications;
 using System.IO;
@@ -78,10 +77,13 @@ namespace File_Archiver.Processing
                 Organizer.compressAndRemoveTargetFolder(localZipDestination);
                 Logger.Info("Successfully compressed and removed folder!");
 
+                FileInfo info = new FileInfo(localTempFolder);
+
+
                 ///Delete any files in cloud over threshold
-                
-                
-                Organizer.
+                Logger.Info(String.Format("Removing any files over: {0} At remote Location: {1} Utilizing", rCloneDirectory, remoteArchive, info.Name));
+                Containment.removeFilesOverThreshold(rCloneDirectory, remoteArchive, info);
+                Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}");
 
                 ///Moving Zipped file to the cloud storage
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
@@ -90,7 +92,7 @@ namespace File_Archiver.Processing
 
                 ///Delete the local folder
                 Logger.Info(String.Format("{0}: {1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
-                Directory.Delete(localTempFolder, true);
+                System.IO.Directory.Delete(localTempFolder, true);
                 Logger.Info("Successfully deleted the local temp folder!");
 
                 ///Delete the cloud folder
