@@ -17,7 +17,7 @@ namespace RClone_Manager.Commands
         /// <param name="rCloneDirectory"></param>
         /// <param name="driveTargetDirectory"></param>
         /// <returns></returns>
-        public static String deleteFolderContents(String rCloneDirectory, String driveTargetDirectory)
+        public static String deleteDirectory(String rCloneDirectory, String driveTargetDirectory)
         {
             ///Timer, for diagnostics
             Stopwatch watch = Stopwatch.StartNew();
