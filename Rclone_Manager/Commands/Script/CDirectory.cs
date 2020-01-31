@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RClone_Manager.Commands
 {
-    public class Directory
+    public class CDirectory
     {
         /// <summary>
         /// Will retrieve a whole folder's contents on the cloud, along with file sizes

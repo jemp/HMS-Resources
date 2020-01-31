@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static RClone_Manager.Utilities.Serialize.Expressions.Directory;
+using static RClone_Manager.Utilities.Serialize.Expressions.CloudDirectoryInfo;
 
 namespace File_Manager.General
 {
@@ -19,10 +19,10 @@ namespace File_Manager.General
         /// <param name="rCloneDirectory"></param>
         /// <param name="directoryToParse"></param>
         /// <returns></returns>
-        public static void removeFilesOverThreshold(String rCloneDirectory, String directoryToParse, FileInfo  targetFIleINfo)
+        public static List<FileCloudInfo> getFIlesInDirectoryOverThreshold(String rCloneDirectory, String directoryToParse, FileInfo  targetFIleINfo)
         {
 
-           List<FileCloudInfo> parsedFiles =  FileDirectory.serializeDirectory(RClone_Manager.Commands.Directory.getFilesStatsInDirectory(rCloneDirectory, directoryToParse));
+           return CloudDirectory.serializeDirectory(RClone_Manager.Commands.CDirectory.getFilesStatsInDirectory(rCloneDirectory, directoryToParse));
 
             ///Return timer in string format
 

@@ -13,7 +13,7 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
         /// This Serializer class will parse Strings into object oriented format.
         /// To be used in conjuction with the Serializer class
         /// </summary>
-    public static class Directory
+    public static class CloudDirectoryInfo
     {
         /// <summary>
         /// Will parse a string in a similar format to:

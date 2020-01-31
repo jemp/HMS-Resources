@@ -12,6 +12,9 @@ using File_Manager.Diagnostics;
 using RClone_Manager.Diagnostics;
 using File_Archiver.Configuration;
 using RClone_Manager.Commands;
+using RClone_Manager.Utilities.Serialize;
+using RClone_Manager.Utilities.Serialize.Expressions;
+using static RClone_Manager.Utilities.Serialize.Expressions.CloudDirectoryInfo;
 
 namespace File_Archiver.Processing
 {
@@ -61,7 +64,7 @@ namespace File_Archiver.Processing
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
 
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
-                elaspedTimer = Delete.deleteFolderContents(rCloneDirectory, remoteDropStreamTarget);
+                elaspedTimer = CDelete.deleteFolderContents(rCloneDirectory, remoteDropStreamTarget);
                 Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
 
 
@@ -82,12 +85,14 @@ namespace File_Archiver.Processing
 
                 ///Delete any files in cloud over threshold
                 Logger.Info(String.Format("Removing any files over: {0} At remote Location: {1} Utilizing", rCloneDirectory, remoteArchive, info.Name));
-                Containment.removeFilesOverThreshold(rCloneDirectory, remoteArchive, info);
-                Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}");
+                List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info);
+                Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
+                filesToRemove.ForEach(i => CDelete.deleteFolderContents(i.FilePath,remoteArchive));
+                Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}",filesToRemove.Count);
 
                 ///Moving Zipped file to the cloud storage
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
-                elaspedTimer = Move.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Config.compressionFormat, Config.connectionAttempts);
+                elaspedTimer = CMove.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Config.compressionFormat, Config.connectionAttempts);
                 Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
 
                 ///Delete the local folder
@@ -97,7 +102,7 @@ namespace File_Archiver.Processing
 
                 ///Delete the cloud folder
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Emptying Cloud Folder", localTempFolder, Config.driveProfileName));
-                Delete.emptyTrashFolder(rCloneDirectory, Config.driveProfileName);
+                CDelete.emptyTrashFolder(rCloneDirectory, Config.driveProfileName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
                 Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.ElapsedMilliseconds.ToString()));

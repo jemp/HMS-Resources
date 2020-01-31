@@ -14,7 +14,7 @@ namespace RClone_Manager.Commands
     /// <summary>
     /// This class is reponsible for all move operations inside of RClone
     /// </summary>
-    public static class Move
+    public static class CMove
     {
 
         /// <summary>

@@ -8,7 +8,7 @@ using RClone_Manager.Utilities;
 
 namespace RClone_Manager.Commands
 {
-    public static class Delete
+    public static class CDelete
     {
 
         /// <summary>

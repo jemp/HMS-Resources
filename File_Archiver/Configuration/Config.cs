@@ -9,6 +9,9 @@ namespace File_Archiver.Configuration
 {
     static class Config
     {
+/// <summary>
+/// #TODO: Document config class
+/// </summary>
 
         internal static string gDriveConfigurationName { get; set; } = ConfigurationManager.AppSettings["gDriveProfileName"];
         public static string driveProfileName { get; set; } = ConfigurationManager.AppSettings["DriveProfileName"];
@@ -16,6 +19,8 @@ namespace File_Archiver.Configuration
         internal static int connectionAttempts { get; set; } = Int32.Parse(ConfigurationManager.AppSettings["connectionAttempts"]);
         internal static string compressionFormat { get; set; } = ConfigurationManager.AppSettings["commpressionFormat"];
         public static string cloudProcessPath { get; set; } = ConfigurationManager.AppSettings["cloudProcessPath"];
+        public static string cloudArchive{ get; set; } = ConfigurationManager.AppSettings["cloudProcessPath"];
+        public static string thresholdMeasuringUnit { get; set; } = ConfigurationManager.AppSettings["thresholdMeasuringUnit"];
 
 
 

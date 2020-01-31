@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static RClone_Manager.Utilities.Serialize.Expressions.Directory;
+using static RClone_Manager.Utilities.Serialize.Expressions.CloudDirectoryInfo;
 
 namespace RClone_Manager.Utilities.Serialize
 {
-    public class FileDirectory
+    public class CloudDirectory
     {
 
         public static List<FileCloudInfo> serializeDirectory(String directorySource)
@@ -16,7 +13,7 @@ namespace RClone_Manager.Utilities.Serialize
 
             List<string> directoryList = directorySource.Split(',').ToList();
             List<FileCloudInfo> toReturn = new List<FileCloudInfo>();
-           toReturn.AddRange(directoryList.Select(x => Expressions.Directory.modifiedTimeSizePath(x)));
+           toReturn.AddRange(directoryList.Select(x => modifiedTimeSizePath(x)));
 
             return toReturn;
 
