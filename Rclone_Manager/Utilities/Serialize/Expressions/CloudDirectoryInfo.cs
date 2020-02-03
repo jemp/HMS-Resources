@@ -50,10 +50,13 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
         /// </summary>
         public class FileCloudInfo : IEnumerable<FileCloudInfo>
         {
+
+
+            #region Properties
             /// <summary>
             /// Length of the file (in bytes)
             /// </summary>
-            public int Length { get; } 
+            public int Length { get; }
             /// <summary>
             /// Last time file was modified
             /// </summary>
@@ -63,9 +66,10 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             /// </summary>
             public String FilePath { get; }
 
-
-            List<FileCloudInfo> mylist = new List<FileCloudInfo>();
-
+            //FileInfoLIst
+             List<FileCloudInfo> fileInfoList = new List<FileCloudInfo>();
+            #endregion
+            #region Instantiators
             /// <summary>
             /// Initialize the FileCLoudInfo Object
             /// </summary>
@@ -82,21 +86,34 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
 
             public FileCloudInfo()
             {
-         
+
 
             }
 
+            #endregion
+
+          ///TODO: Casting for fileinfo
+            /// <returns></returns>
+            //public static implicit operator result-type(op-type operand)
+            //{
+
+            //}
+
+
+            #region Enumorator Ovverides
             public IEnumerator<FileCloudInfo> GetEnumerator()
             {
-                return mylist.GetEnumerator();
+                return fileInfoList.GetEnumerator();
             }
+
 
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-         
+            #endregion
+
         }
 
 
