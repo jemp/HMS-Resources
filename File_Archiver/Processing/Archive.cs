@@ -40,7 +40,8 @@ namespace File_Archiver.Processing
             String remoteDropStreamTarget,
             String remoteArchive, 
             String fileFormatNameRegex, 
-            String fileExtenstion)
+            String fileExtenstion,
+            String thesholdInGigabytes)
         {
 
             Stopwatch watch = Stopwatch.StartNew();
@@ -85,10 +86,10 @@ namespace File_Archiver.Processing
 
                 ///Delete any files in cloud over threshold
                 Logger.Info(String.Format("Removing any files over: {0} At remote Location: {1} Utilizing", rCloneDirectory, remoteArchive, info.Name));
-                List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info);
+                List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info, Double.Parse(thesholdInGigabytes));
                 Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
                 filesToRemove.ForEach(i => CDelete.deleteDirectory(i.FilePath,remoteArchive));
-                Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}",filesToRemove.Count);
+                Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}",filesToRemove.Count, ByteSizeLib.ByteSize.FromGigaBytes(filesToRemove.Sum(i=>i.Length)));
 
                 ///Moving Zipped file to the cloud storage
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));

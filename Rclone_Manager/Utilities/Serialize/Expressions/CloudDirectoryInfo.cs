@@ -56,7 +56,7 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             /// <summary>
             /// Length of the file (in bytes)
             /// </summary>
-            public int Length { get; }
+            public long Length { get; }
             /// <summary>
             /// Last time file was modified
             /// </summary>
@@ -69,6 +69,7 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             //FileInfoLIst
              List<FileCloudInfo> fileInfoList = new List<FileCloudInfo>();
             #endregion
+
             #region Instantiators
             /// <summary>
             /// Initialize the FileCLoudInfo Object
@@ -76,7 +77,7 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             /// <param name="initLength"></param>
             /// <param name="initLastModified"></param>
             /// <param name="initFilePath"></param>
-            public FileCloudInfo(int initLength, DateTime initLastModified, String initFilePath)
+            public FileCloudInfo(long initLength, DateTime initLastModified, String initFilePath)
             {
                 Length = initLength;
                 LastModified = initLastModified;
@@ -89,18 +90,19 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
 
 
             }
+            /// <summary>
+            /// Cast operand for conversion to: FileInfo -> FileCloudInfo
+            /// </summary>
+            /// <param name="operand"></param>
+            public static implicit operator FileCloudInfo(FileInfo operand)
+            {
 
+                return new FileCloudInfo(operand.Length, operand.LastWriteTime, operand.FullName);
+
+            }
             #endregion
 
-          ///TODO: Casting for fileinfo
-            /// <returns></returns>
-            //public static implicit operator result-type(op-type operand)
-            //{
-
-            //}
-
-
-            #region Enumorator Ovverides
+            #region Enumerator Ovverides
             public IEnumerator<FileCloudInfo> GetEnumerator()
             {
                 return fileInfoList.GetEnumerator();
