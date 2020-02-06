@@ -71,9 +71,9 @@ namespace File_Archiver.Processing
 
                 ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
 
-                Logger.Info(String.Format("{0} - cloudProcessName: {1} cloudProcessPath: {2}", "Restarting Process", Config.cloudProcessName, Config.cloudProcessPath));
-                Management.restartProcess(Config.cloudProcessName, Config.cloudProcessPath);
-                Logger.Info("Process successully restarted!");
+                //Logger.Info(String.Format("{0} - cloudProcessName: {1} cloudProcessPath: {2}", "Restarting Process", Config.cloudProcessName, Config.cloudProcessPath));
+                //Management.restartProcess(Config.cloudProcessName, Config.cloudProcessPath);
+                //Logger.Info("Process successully restarted!");
 
 
                 ///Compress / Remove the folder to be archived
@@ -81,14 +81,14 @@ namespace File_Archiver.Processing
                 Organizer.compressAndRemoveTargetFolder(localZipDestination);
                 Logger.Info("Successfully compressed and removed folder!");
 
-                FileInfo info = new FileInfo(localTempFolder);
+                FileInfo info = new FileInfo(localZipDestination);
 
-
+                ///TODO: Correct directory
                 ///Delete any files in cloud over threshold
                 Logger.Info(String.Format("Removing any files over: {0} At remote Location: {1} Utilizing", rCloneDirectory, remoteArchive, info.Name));
                 List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info, Double.Parse(thesholdInGigabytes));
                 Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
-                filesToRemove.ForEach(i => CDelete.deleteDirectory(i.FilePath,remoteArchive));
+                filesToRemove.ForEach(i => CDelete.deleteDirectory(rCloneDirectory,remoteArchive));
                 Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}",filesToRemove.Count, ByteSizeLib.ByteSize.FromGigaBytes(filesToRemove.Sum(i=>i.Length)));
 
                 ///Moving Zipped file to the cloud storage

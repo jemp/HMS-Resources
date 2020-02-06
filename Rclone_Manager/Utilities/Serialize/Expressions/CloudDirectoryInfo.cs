@@ -31,13 +31,13 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             String fileInfoExpression = @"(0*[1-9][0-9]*) ([12]\d{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01]) \d+:\d{2}:\d{2}\.[0-9]{9}) ([^\\]*(?=[.][a-zA-Z])\.[^.]+$)";
 
             ///Let's throw the input into the regex format
-            Regex regex = new Regex(fileInput, RegexOptions.IgnoreCase);
+            Regex regex = new Regex(fileInfoExpression, RegexOptions.IgnoreCase);
 
             ///let's get the matches!
-            Match match = regex.Match(fileInfoExpression);
+            Match match = regex.Match(fileInput);
 
             ///Initialize the FileCloudInfo object so we can use it
-            FileCloudInfo result = new FileCloudInfo( Int32.Parse(match.Groups[0].Value),DateTime.Parse( match.Groups[1].Value),  match.Groups[2].Value);
+            FileCloudInfo result = new FileCloudInfo( Int32.Parse(match.Groups[1].Value),DateTime.Parse( match.Groups[2].Value),  match.Groups[3].Value);
   
 
             return result;

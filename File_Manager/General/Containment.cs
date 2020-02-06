@@ -31,13 +31,13 @@ namespace File_Manager.General
             ///Let's add the new file to the list, as if it was part of the 'gang' all of the long
             existingFiles.Add(targetFileInfo);
             ///Order the existing files
-            existingFiles.OrderBy(i => i.LastModified);
+            existingFiles.OrderByDescending(i => i.LastModified );
 
             ///While the files are under the threshold..
-            while ( thresholdInGigabytes < existingFiles.Sum( f => f.Length))
+            while (maxFileSize.Bytes < existingFiles.Sum(f => f.Length)) 
             {
                 ///Add the file to the 'remove' list
-                filesOverThreshold.AddRange(existingFiles[0]);
+                filesOverThreshold.Add(existingFiles[0]);
                 ///Finally, remove the file from the existing directory. It's not long for the world...
                 existingFiles.RemoveAt(0);
             }

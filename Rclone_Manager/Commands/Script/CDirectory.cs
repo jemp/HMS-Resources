@@ -27,7 +27,7 @@ namespace RClone_Manager.Commands
             String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
             String shellOutput =  Shell.runRCloneShell(rCloneDirectory, "lsl", fullParameters);
 
-            FileInfo file = new FileInfo(null);
+          
         
 
          

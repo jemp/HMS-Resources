@@ -11,7 +11,8 @@ namespace RClone_Manager.Utilities.Serialize
         public static List<FileCloudInfo> serializeDirectory(String directorySource)
         {
 
-            List<string> directoryList = directorySource.Split(',').ToList();
+            List<string> directoryList = directorySource.Split('\n').ToList();
+            directoryList.RemoveAt(directoryList.Count - 1); ///Remove the 'blank' row that is constant
             List<FileCloudInfo> toReturn = new List<FileCloudInfo>();
            toReturn.AddRange(directoryList.Select(x => modifiedTimeSizePath(x)));
 
