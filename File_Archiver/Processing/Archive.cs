@@ -46,6 +46,9 @@ namespace File_Archiver.Processing
 
             Stopwatch watch = Stopwatch.StartNew();
 
+            String localTempFolder = String.Empty;
+            String localZipDestination =  String.Empty;
+
             try
             {
             
@@ -56,12 +59,12 @@ namespace File_Archiver.Processing
 
                 ///Let's get a temperary name for the temperary folder
                 Logger.Info("Getting Temparary Folder... ");
-                String localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
+                 localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
                 Logger.Info(String.Format("{0} - {1}", "Temparary Folder Retrieved!",localTempFolder));
                 
                 ///Where will this zip file be located locally
                 Logger.Info("Creating Time-Stamped folders...");
-                String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
+                localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
 
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
@@ -71,9 +74,9 @@ namespace File_Archiver.Processing
 
                 ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
 
-                //Logger.Info(String.Format("{0} - cloudProcessName: {1} cloudProcessPath: {2}", "Restarting Process", Config.cloudProcessName, Config.cloudProcessPath));
-                //Management.restartProcess(Config.cloudProcessName, Config.cloudProcessPath);
-                //Logger.Info("Process successully restarted!");
+                Logger.Info(String.Format("{0} - cloudProcessName: {1} cloudProcessPath: {2}", "Restarting Process", Config.cloudProcessName, Config.cloudProcessPath));
+                Management.restartProcess(Config.cloudProcessName, Config.cloudProcessPath);
+                Logger.Info("Process successully restarted!");
 
 
                 ///Compress / Remove the folder to be archived
@@ -88,7 +91,7 @@ namespace File_Archiver.Processing
                 Logger.Info(String.Format("Removing any files over: {0} At remote Location: {1} Utilizing", rCloneDirectory, remoteArchive, info.Name));
                 List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info, Double.Parse(thesholdInGigabytes));
                 Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
-                filesToRemove.ForEach(i => CDelete.deleteDirectory(rCloneDirectory,remoteArchive));
+                filesToRemove.ForEach(i => CDelete.deleteDirectory(rCloneDirectory, String.Format(@"{0}/{1}",remoteArchive,i.FilePath)));
                 Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}",filesToRemove.Count, ByteSizeLib.ByteSize.FromGigaBytes(filesToRemove.Sum(i=>i.Length)));
 
                 ///Moving Zipped file to the cloud storage
@@ -106,7 +109,7 @@ namespace File_Archiver.Processing
                 CDelete.emptyTrashFolder(rCloneDirectory, Config.driveProfileName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
-                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.ElapsedMilliseconds.ToString()));
+                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.Elapsed.Minutes.ToString()));
 
 
             }
@@ -128,6 +131,14 @@ namespace File_Archiver.Processing
                
                 Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2} ", "Error while Archiving", e.Message, watch.Elapsed.ToString()));
                 Logger.Trace(e.StackTrace);
+            }
+
+           finally
+            {
+                ///If the process fails, remove the temperary directory!
+                if (Directory.Exists(localTempFolder)) { Directory.Delete(localTempFolder, true); }
+                
+
             }
 
         }

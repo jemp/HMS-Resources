@@ -28,13 +28,12 @@ namespace File_Manager.General
             var existingFiles  = CloudDirectory.serializeDirectory(RClone_Manager.Commands.CDirectory.getFilesStatsInDirectory(rCloneDirectory, directoryToParse));
             ///All of the files that are over the threshold we are allowing (As defined above)
             var filesOverThreshold = new List<FileCloudInfo>();
-            ///Let's add the new file to the list, as if it was part of the 'gang' all of the long
-            existingFiles.Add(targetFileInfo);
+
             ///Order the existing files
             existingFiles.OrderByDescending(i => i.LastModified );
 
             ///While the files are under the threshold..
-            while (maxFileSize.Bytes < existingFiles.Sum(f => f.Length)) 
+            while (maxFileSize.Bytes < existingFiles.Sum(f => f.Length + targetFileInfo.Length)) 
             {
                 ///Add the file to the 'remove' list
                 filesOverThreshold.Add(existingFiles[0]);
