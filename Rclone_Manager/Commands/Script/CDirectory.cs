@@ -20,32 +20,40 @@ namespace RClone_Manager.Commands
         public static string getFilesStatsInDirectory(String rCloneDirectory, String driveTargetDirectory)
         {
 
-            ///Timer, for diagnostics
-            Stopwatch watch = Stopwatch.StartNew();
-
             ///rClone console commands
             String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
-            String shellOutput =  Shell.runRCloneShell(rCloneDirectory, "lsl", fullParameters);
+            String shellOutput = Shell.runRCloneShell(rCloneDirectory, "lsl", fullParameters);
 
-          
-        
 
-         
             return shellOutput;
             ///Return timer in string format
 
         }
 
 
-        
-        
+        /// <summary>
+        /// Will remove any duplicated results / will rename like results.
+        ///https://rclone.org/commands/rclone_dedupe/
+        /// </summary>
+        /// <param name="rCloneDirectory"></param>
+        /// <param name="driveTargetDirectory"></param>
+        /// <returns></returns>
+
+        public static string renameDuplicatedFiles(String rCloneDirectory, String driveTargetDirectory)
+        {
+
+            ///rClone console commands
+            String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
+            String shellOutput = Shell.runRCloneShell(rCloneDirectory, "dedupe rename", fullParameters);
+
+
+            return shellOutput;
+
+        }
+
+
 
 
 
     }
-
-
- 
-
-
 }

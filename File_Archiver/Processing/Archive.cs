@@ -84,14 +84,22 @@ namespace File_Archiver.Processing
                 Organizer.compressAndRemoveTargetFolder(localZipDestination);
                 Logger.Info("Successfully compressed and removed folder!");
 
+
+                ///To make the threshold process a little easier, we need to rename any duplicated file names
+                Logger.Info(String.Format("{0}: {1}", "Renaming any duplicated files for removal", localTempFolder));
+                CDirectory.renameDuplicatedFiles(rCloneDirectory, remoteArchive);
+                Logger.Info("Duplicates renamed / removed!");
+
+                ///Serialize localzipdesitination file for parsing
                 FileInfo info = new FileInfo(localZipDestination);
 
                 ///Delete any files in cloud over threshold
-                Logger.Info(String.Format("Removing any files over: {0} At remote Location: {1} Utilizing", rCloneDirectory, remoteArchive, info.Name));
+                Logger.Info(String.Format("Removing any files over: {0} (GB) At remote Location: {1} Utilizing: {2}", thesholdInGigabytes, remoteArchive, info.Name));
                 List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info, Double.Parse(thesholdInGigabytes));
                 Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
                 filesToRemove.ForEach(i => CDelete.deleteDirectory(rCloneDirectory, String.Format(@"{0}/{1}",remoteArchive,i.FilePath)));
-                Logger.Info("Successfully removed files over threshold! Files removed: {0} Memory Free'd up: {1}",filesToRemove.Count, ByteSizeLib.ByteSize.FromGigaBytes(filesToRemove.Sum(i=>i.Length)));
+                Logger.Info("Successfully removed files over threshold! Files removed: {0} | Memory Free'd up: {1} (GB) ",filesToRemove.Count, 
+                    ByteSizeLib.ByteSize.FromBytes(filesToRemove.Sum(i => i.Length)).GigaBytes, (filesToRemove.Sum(i=>i.Length)));
 
                 ///Moving Zipped file to the cloud storage
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
@@ -108,7 +116,7 @@ namespace File_Archiver.Processing
                 CDelete.emptyTrashFolder(rCloneDirectory, Config.driveProfileName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
-                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.Elapsed.Minutes.ToString()));
+                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.Elapsed.ToString()));
 
 
             }
