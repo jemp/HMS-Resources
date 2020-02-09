@@ -92,10 +92,11 @@ namespace File_Archiver.Processing
 
                 ///Serialize localzipdesitination file for parsing
                 FileInfo info = new FileInfo(localZipDestination);
-
+                ///Get a list of all of the existing files in target archive
+                var existingFiles = CloudDirectory.serializeDirectory(CDirectory.getFilesStatsInDirectory(rCloneDirectory, remoteArchive));
                 ///Delete any files in cloud over threshold
                 Logger.Info(String.Format("Removing any files over: {0} (GB) At remote Location: {1} Utilizing: {2}", thesholdInGigabytes, remoteArchive, info.Name));
-                List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info, Double.Parse(thesholdInGigabytes));
+                List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(existingFiles,info, Double.Parse(thesholdInGigabytes));
                 Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
                 filesToRemove.ForEach(i => CDelete.deleteDirectory(rCloneDirectory, String.Format(@"{0}/{1}",remoteArchive,i.FilePath)));
                 Logger.Info("Successfully removed files over threshold! Files removed: {0} | Memory Free'd up: {1} (GB) ",filesToRemove.Count, 

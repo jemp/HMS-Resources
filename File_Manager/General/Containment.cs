@@ -1,12 +1,10 @@
 ﻿using ByteSizeLib;
+using RClone_Manager.Commands;
 using RClone_Manager.Utilities.Serialize;
-using RClone_Manager.Utilities.Serialize.Expressions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static RClone_Manager.Utilities.Serialize.Expressions.CloudDirectoryInfo;
 
 namespace File_Manager.General
@@ -20,12 +18,11 @@ namespace File_Manager.General
         /// <param name="rCloneDirectory"></param>
         /// <param name="directoryToParse"></param>
         /// <returns></returns>
-        public static List<FileCloudInfo> getFIlesInDirectoryOverThreshold(String rCloneDirectory, String directoryToParse, FileInfo  targetFileInfo, double thresholdInGigabytes)
+        public static List<FileCloudInfo> getFIlesInDirectoryOverThreshold(List<FileCloudInfo> existingFiles, FileInfo  targetFileInfo, double thresholdInGigabytes)
         {
             ///First, let's get the maximum space we are allowing from the external library
             var maxFileSize = ByteSize.FromGigaBytes(thresholdInGigabytes);
-            ///All of the existing files
-            var existingFiles  = CloudDirectory.serializeDirectory(RClone_Manager.Commands.CDirectory.getFilesStatsInDirectory(rCloneDirectory, directoryToParse));
+
             ///All of the files that are over the threshold we are allowing (As defined above)
             var filesOverThreshold = new List<FileCloudInfo>();
 

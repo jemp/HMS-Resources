@@ -29,6 +29,9 @@ namespace RClone_Manager.Utilities.Serialize
 
         }
 
-
+        public static object serializeDirectory(object p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
