@@ -86,7 +86,6 @@ namespace File_Archiver.Processing
 
                 FileInfo info = new FileInfo(localZipDestination);
 
-                ///TODO: Correct directory
                 ///Delete any files in cloud over threshold
                 Logger.Info(String.Format("Removing any files over: {0} At remote Location: {1} Utilizing", rCloneDirectory, remoteArchive, info.Name));
                 List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(rCloneDirectory, remoteArchive, info, Double.Parse(thesholdInGigabytes));
