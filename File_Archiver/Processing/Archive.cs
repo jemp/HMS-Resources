@@ -64,18 +64,6 @@ namespace File_Archiver.Processing
                 Logger.Info("Creating Time-Stamped folders...");
                 localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
-                ///TODO: Remove this to a later process...
-                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
-                CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
-                Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
-
-
-                ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
-
-                Logger.Info(String.Format("{0} - cloudProcessName: {1} cloudProcessPath: {2}", "Restarting Process", Config.cloudProcessName, Config.cloudProcessPath));
-                Management.restartProcess(Config.cloudProcessName, Config.cloudProcessPath);
-                Logger.Info("Process successully restarted!");
-
 
                 ///Compress / Remove the folder to be archived
                 Logger.Info(String.Format("{0}: {1}", "Compress and removing target folder to the following location", localTempFolder));
@@ -110,6 +98,20 @@ namespace File_Archiver.Processing
                 Logger.Info(String.Format("{0}: {1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
                 System.IO.Directory.Delete(localTempFolder, true);
                 Logger.Info("Successfully deleted the local temp folder!");
+
+                ///TODO: Remove this to a later process...
+                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
+                CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
+                Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
+
+
+                ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
+
+                Logger.Info(String.Format("{0} - cloudProcessName: {1} cloudProcessPath: {2}", "Restarting Process", Config.cloudProcessName, Config.cloudProcessPath));
+                Management.restartProcess(Config.cloudProcessName, Config.cloudProcessPath);
+                Logger.Info("Process successully restarted!");
+
+
 
                 ///Delete the cloud folder
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Emptying Cloud Folder", localTempFolder, Config.driveProfileName));
