@@ -27,7 +27,7 @@ namespace File_Manager.General
             var filesOverThreshold = new List<FileCloudInfo>();
 
             ///Order the existing files
-            existingFiles.OrderByDescending(i => i.LastModified );
+           existingFiles =  existingFiles.OrderBy(i => i.LastModified ).ToList();
 
             ///While the files are under the threshold..
             while (maxFileSize.Bytes < existingFiles.Sum(f => f.Length + targetFileInfo.Length)) 

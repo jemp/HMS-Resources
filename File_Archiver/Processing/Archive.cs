@@ -64,7 +64,7 @@ namespace File_Archiver.Processing
                 Logger.Info("Creating Time-Stamped folders...");
                 localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
-
+                ///TODO: Remove this to a later process...
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
                 CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
                 Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
@@ -101,6 +101,7 @@ namespace File_Archiver.Processing
                     ByteSizeLib.ByteSize.FromBytes(filesToRemove.Sum(i => i.Length)).GigaBytes, (filesToRemove.Sum(i=>i.Length)));
 
                 ///Moving Zipped file to the cloud storage
+
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
                CMove.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Config.compressionFormat, Config.connectionAttempts);
                 Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
