@@ -28,7 +28,11 @@ namespace RClone_Manager.Utilities
             startInfo.WorkingDirectory = String.Format("{0}", rCloneDirectory);
             ///Pass arguements
             startInfo.Arguments = String.Format("/C \"rclone {0} {1}", command, parameters);
+            startInfo.UseShellExecute = true;
 
+            //Flags required to get an output out of the shell
+            startInfo.RedirectStandardOutput = true;
+            startInfo.UseShellExecute = false;
 
             //Finally, after everything is set, start the process until exit
             process.StartInfo = startInfo;
@@ -36,9 +40,15 @@ namespace RClone_Manager.Utilities
             commandOutput = process.StandardOutput.ReadToEnd();
             process.WaitForExit();
 
+  
+     
+           
+
+
             return commandOutput;
         }
 
 
     }
 }
+

@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace RClone_Manager.Utilities.Serialize.Expressions
         {
@@ -12,7 +13,7 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
         /// This Serializer class will parse Strings into object oriented format.
         /// To be used in conjuction with the Serializer class
         /// </summary>
-    public static class Directory
+    public static class CloudDirectoryInfo
     {
         /// <summary>
         /// Will parse a string in a similar format to:
@@ -30,13 +31,13 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             String fileInfoExpression = @"(0*[1-9][0-9]*) ([12]\d{3}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01]) \d+:\d{2}:\d{2}\.[0-9]{9}) ([^\\]*(?=[.][a-zA-Z])\.[^.]+$)";
 
             ///Let's throw the input into the regex format
-            Regex regex = new Regex(fileInput, RegexOptions.IgnoreCase);
+            Regex regex = new Regex(fileInfoExpression, RegexOptions.IgnoreCase);
 
             ///let's get the matches!
-            Match match = regex.Match(fileInfoExpression);
+            Match match = regex.Match(fileInput);
 
             ///Initialize the FileCloudInfo object so we can use it
-            FileCloudInfo result = new FileCloudInfo( Int32.Parse(match.Groups[0].Value),DateTime.Parse( match.Groups[1].Value),  match.Groups[2].Value);
+            FileCloudInfo result = new FileCloudInfo( Int32.Parse(match.Groups[1].Value),DateTime.Parse( match.Groups[2].Value),  match.Groups[3].Value);
   
 
             return result;
@@ -47,12 +48,15 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
         /// <summary>
         /// Object for storing basic information for Cloud File Information
         /// </summary>
-        public class FileCloudInfo
+        public class FileCloudInfo : IEnumerable<FileCloudInfo>
         {
+
+
+            #region Properties
             /// <summary>
             /// Length of the file (in bytes)
             /// </summary>
-            public int Length { get; } 
+            public long Length { get; }
             /// <summary>
             /// Last time file was modified
             /// </summary>
@@ -62,21 +66,56 @@ namespace RClone_Manager.Utilities.Serialize.Expressions
             /// </summary>
             public String FilePath { get; }
 
+            //FileInfoLIst
+             List<FileCloudInfo> fileInfoList = new List<FileCloudInfo>();
+            #endregion
+
+            #region Instantiators
             /// <summary>
             /// Initialize the FileCLoudInfo Object
             /// </summary>
             /// <param name="initLength"></param>
             /// <param name="initLastModified"></param>
             /// <param name="initFilePath"></param>
-            public FileCloudInfo(int initLength, DateTime initLastModified, String initFilePath)
+            public FileCloudInfo(long initLength, DateTime initLastModified, String initFilePath)
             {
                 Length = initLength;
                 LastModified = initLastModified;
                 FilePath = initFilePath;
 
             }
-           
-          
+
+            public FileCloudInfo()
+            {
+
+
+            }
+            /// <summary>
+            /// Cast operand for conversion to: FileInfo -> FileCloudInfo
+            /// </summary>
+            /// <param name="operand"></param>
+            public static implicit operator FileCloudInfo(FileInfo operand)
+            {
+
+                return new FileCloudInfo(operand.Length, operand.LastWriteTime, operand.FullName);
+
+            }
+            #endregion
+
+            #region Enumerator Ovverides
+            public IEnumerator<FileCloudInfo> GetEnumerator()
+            {
+                return fileInfoList.GetEnumerator();
+            }
+
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return this.GetEnumerator();
+            }
+
+            #endregion
+
         }
 
 

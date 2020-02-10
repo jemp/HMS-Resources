@@ -8,7 +8,7 @@ using RClone_Manager.Utilities;
 
 namespace RClone_Manager.Commands
 {
-    public static class Delete
+    public static class CDelete
     {
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace RClone_Manager.Commands
         /// <param name="rCloneDirectory"></param>
         /// <param name="driveTargetDirectory"></param>
         /// <returns></returns>
-        public static String deleteFolderContents(String rCloneDirectory, String driveTargetDirectory)
+        public static void deleteDirectory(String rCloneDirectory, String driveTargetDirectory)
         {
             ///Timer, for diagnostics
             Stopwatch watch = Stopwatch.StartNew();
@@ -26,8 +26,7 @@ namespace RClone_Manager.Commands
             String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
             Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
-            ///Return timer in string format
-            return watch.Elapsed.ToString();
+  
         }
 
         /// <summary>
@@ -35,7 +34,7 @@ namespace RClone_Manager.Commands
         /// </summary>
         /// <param name="rCloneDirectory"></param>
         /// <param name="rCloneConfiguration"></param>
-        public static String emptyTrashFolder(String rCloneDirectory, String rCloneConfiguration)
+        public static void emptyTrashFolder(String rCloneDirectory, String rCloneConfiguration)
         {
             ///Timer, for diagnostics
             Stopwatch watch = Stopwatch.StartNew();
@@ -45,9 +44,10 @@ namespace RClone_Manager.Commands
 
 
 
-            ///Return timer in string format
-            return watch.Elapsed.ToString();
         }
+
+
+     
 
 
     }

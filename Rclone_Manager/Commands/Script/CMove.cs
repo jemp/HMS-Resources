@@ -14,7 +14,7 @@ namespace RClone_Manager.Commands
     /// <summary>
     /// This class is reponsible for all move operations inside of RClone
     /// </summary>
-    public static class Move
+    public static class CMove
     {
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace RClone_Manager.Commands
         /// <param name="fileExtenstion">What extentension are we looking for?</param>
         /// <param name="maxAttempts">How many attempts to connect before we give up?</param>
         /// <returns></returns>
-        public static String moveFile(String rCloneDirectory, String sourceDirectory, String driveTargetDirectory, String fileExtenstion, int maxAttempts)
+        public static void moveFile(String rCloneDirectory, String sourceDirectory, String driveTargetDirectory, String fileExtenstion, int maxAttempts)
         {
 
             try
@@ -36,8 +36,6 @@ namespace RClone_Manager.Commands
                 DirectoryInfo d = new DirectoryInfo(sourceDirectory);
                 FileInfo[] files = d.GetFiles(String.Format("*.{0}", fileExtenstion)); //Getting files of a certain thype
 
-
-                Stopwatch watch = Stopwatch.StartNew();
 
                 ///For Each file in specified location
                 foreach (FileInfo file in files)
@@ -68,8 +66,7 @@ namespace RClone_Manager.Commands
                     
 
                 }
-                ///Return elapse timer in string format
-                return watch.Elapsed.ToString();
+   
             }
             catch (Exception e)
             {

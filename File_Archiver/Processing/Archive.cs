@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RClone_Manager.RClone_Commands;
 using File_Manager.General;
 using ToolKit.Applications;
 using System.IO;
@@ -13,6 +12,9 @@ using File_Manager.Diagnostics;
 using RClone_Manager.Diagnostics;
 using File_Archiver.Configuration;
 using RClone_Manager.Commands;
+using RClone_Manager.Utilities.Serialize;
+using RClone_Manager.Utilities.Serialize.Expressions;
+using static RClone_Manager.Utilities.Serialize.Expressions.CloudDirectoryInfo;
 
 namespace File_Archiver.Processing
 {
@@ -38,10 +40,14 @@ namespace File_Archiver.Processing
             String remoteDropStreamTarget,
             String remoteArchive, 
             String fileFormatNameRegex, 
-            String fileExtenstion)
+            String fileExtenstion,
+            String thesholdInGigabytes)
         {
 
             Stopwatch watch = Stopwatch.StartNew();
+
+            String localTempFolder = String.Empty;
+            String localZipDestination =  String.Empty;
 
             try
             {
@@ -49,21 +55,54 @@ namespace File_Archiver.Processing
 
                 ///Timer for diagnosing
 
-                String elaspedTimer;
-
                 ///Let's get a temperary name for the temperary folder
                 Logger.Info("Getting Temparary Folder... ");
-                String localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
+                 localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
                 Logger.Info(String.Format("{0} - {1}", "Temparary Folder Retrieved!",localTempFolder));
                 
                 ///Where will this zip file be located locally
                 Logger.Info("Creating Time-Stamped folders...");
-                String localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
+                localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
 
+                ///Compress / Remove the folder to be archived
+                Logger.Info(String.Format("{0}: {1}", "Compress and removing target folder to the following location", localTempFolder));
+                Organizer.compressAndRemoveTargetFolder(localZipDestination);
+                Logger.Info("Successfully compressed and removed folder!");
+
+
+                ///To make the threshold process a little easier, we need to rename any duplicated file names
+                Logger.Info(String.Format("{0}: {1}", "Renaming any duplicated files for removal", localTempFolder));
+                CDirectory.renameDuplicatedFiles(rCloneDirectory, remoteArchive);
+                Logger.Info("Duplicates renamed / removed!");
+
+                ///Serialize localzipdesitination file for parsing
+                FileInfo info = new FileInfo(localZipDestination);
+                ///Get a list of all of the existing files in target archive
+                var existingFiles = CloudDirectory.serializeDirectory(CDirectory.getFilesStatsInDirectory(rCloneDirectory, remoteArchive));
+                ///Delete any files in cloud over threshold
+                Logger.Info(String.Format("Removing any files over: {0} (GB) At remote Location: {1} Utilizing: {2}", thesholdInGigabytes, remoteArchive, info.Name));
+                List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(existingFiles,info, Double.Parse(thesholdInGigabytes));
+                Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
+                filesToRemove.ForEach(i => CDelete.deleteDirectory(rCloneDirectory, String.Format(@"{0}/{1}",remoteArchive,i.FilePath)));
+                Logger.Info("Successfully removed files over threshold! Files removed: {0} | Memory Free'd up: {1} (GB) ",filesToRemove.Count, 
+                    ByteSizeLib.ByteSize.FromBytes(filesToRemove.Sum(i => i.Length)).GigaBytes, (filesToRemove.Sum(i=>i.Length)));
+
+                ///Moving Zipped file to the cloud storage
+
+                Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
+               CMove.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Config.compressionFormat, Config.connectionAttempts);
+                Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
+
+                ///Delete the local folder
+                Logger.Info(String.Format("{0}: {1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
+                System.IO.Directory.Delete(localTempFolder, true);
+                Logger.Info("Successfully deleted the local temp folder!");
+
+                ///TODO: Remove this to a later process...
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
-                elaspedTimer = Delete.deleteFolderContents(rCloneDirectory, remoteDropStreamTarget);
-                Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
+                CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
+                Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
 
 
                 ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
@@ -73,29 +112,13 @@ namespace File_Archiver.Processing
                 Logger.Info("Process successully restarted!");
 
 
-                ///Compress / Remove the folder to be archived
-                Logger.Info(String.Format("{0}: {1}", "Compress and removing target folder to the following location", localTempFolder));
-                Organizer.compressAndRemoveTargetFolder(localZipDestination);
-                Logger.Info("Successfully compressed and removed folder!");
-
-                ///Delete any files in cloud over threshold
-
-                ///Moving Zipped file to the cloud storage
-                Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
-                elaspedTimer = Move.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Config.compressionFormat, Config.connectionAttempts);
-                Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
-
-                ///Delete the local folder
-                Logger.Info(String.Format("{0}: {1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
-                Directory.Delete(localTempFolder, true);
-                Logger.Info("Successfully deleted the local temp folder!");
 
                 ///Delete the cloud folder
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Emptying Cloud Folder", localTempFolder, Config.driveProfileName));
-                Delete.emptyTrashFolder(rCloneDirectory, Config.driveProfileName);
+                CDelete.emptyTrashFolder(rCloneDirectory, Config.driveProfileName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
-                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.ElapsedMilliseconds.ToString()));
+                Logger.Info(String.Format("{0} - Elasped time:{1}", "Archiver has successully been ran!", watch.Elapsed.ToString()));
 
 
             }
@@ -117,6 +140,14 @@ namespace File_Archiver.Processing
                
                 Logger.Error(e, String.Format("{0} - {1} (Elapsed time before error: {2} ", "Error while Archiving", e.Message, watch.Elapsed.ToString()));
                 Logger.Trace(e.StackTrace);
+            }
+
+           finally
+            {
+                ///If the process fails, remove the temperary directory!
+                if (Directory.Exists(localTempFolder)) { Directory.Delete(localTempFolder, true); }
+                
+
             }
 
         }
