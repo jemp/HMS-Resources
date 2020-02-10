@@ -55,8 +55,6 @@ namespace File_Archiver.Processing
 
                 ///Timer for diagnosing
 
-                String elaspedTimer;
-
                 ///Let's get a temperary name for the temperary folder
                 Logger.Info("Getting Temparary Folder... ");
                  localTempFolder = Organizer.getTempFolderPath(localDropStream, localArchiverBuffer);
@@ -68,8 +66,8 @@ namespace File_Archiver.Processing
                 Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
 
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
-                elaspedTimer = CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
-                Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
+                CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
+                Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
 
 
                 ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
@@ -104,8 +102,8 @@ namespace File_Archiver.Processing
 
                 ///Moving Zipped file to the cloud storage
                 Logger.Info(String.Format("{0} - Local Temp Folder: {1} RemoteArchive: {2}", "Moving the compressed file to cloud storage!", localTempFolder, remoteArchive));
-                elaspedTimer = CMove.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Config.compressionFormat, Config.connectionAttempts);
-                Logger.Info(String.Format("{0}: {1}", "Successfully deleted Contents! Elapsed time", elaspedTimer));
+               CMove.moveFile(rCloneDirectory, localTempFolder, remoteArchive, Config.compressionFormat, Config.connectionAttempts);
+                Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
 
                 ///Delete the local folder
                 Logger.Info(String.Format("{0}: {1}", "Deleting the following local 'Temp Folder' ", localTempFolder));
