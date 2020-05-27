@@ -21,8 +21,9 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    configuration: '$(buildConfiguration)'
     projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --platform $(buildPlatform)  ' 
+    
     
 
 - task: DotNetCoreCLI@2
