@@ -17,6 +17,13 @@ variables:
 
 steps:
 
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+
 # ASP.NET
 - task: DotNetCoreCLI@2
   inputs:
