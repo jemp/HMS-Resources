@@ -22,7 +22,7 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --platform $(buildPlatform)  ' 
+    arguments: '--configuration $(buildConfiguration)' 
     
     
 
