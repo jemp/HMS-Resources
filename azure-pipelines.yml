@@ -12,8 +12,8 @@ pool:
 
 variables:
   solution: '**/*.sln'
-  buildPlatform: $(buildPlatform)
-  buildConfiguration: $(buildConfiguration)
+  buildPlatform: $(buildPlatformPipeline)
+  buildConfiguration: $(buildConfigurationPipeline)
 
 steps:
 
