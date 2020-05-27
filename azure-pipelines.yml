@@ -1,4 +1,4 @@
-# ASP.NET
+
 
 # Build and test ASP.NET projects.
 # Add steps that publish symbols, save build artifacts, deploy, and more:
@@ -16,18 +16,15 @@ variables:
   buildConfiguration: $(buildConfiguration)
 
 steps:
-- task: NuGetToolInstaller@1
 
-
+# ASP.NET
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
+    projects: '**/*.csproj'
 
-
-- task: ArchiveFiles@2
+- task: DotNetCoreCLI@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/*.csproj'
