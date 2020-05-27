@@ -22,7 +22,7 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '--configuration $(buildConfiguration) /p:Platform=buildPlatformPipeline ' 
+    arguments: '--configuration $(buildConfiguration) /p:Platform=buildPlatform ' 
     
     
 
