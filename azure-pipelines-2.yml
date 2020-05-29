@@ -27,7 +27,7 @@ steps:
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-    arguments: '/p:configuration=$(buildConfiguration)   /p:Platform=$(buildPlatform) ' 
+    arguments: '/p:configuration=$(buildPlatformPipeline)   /p:Platform=$(buildConfigurationPipeline) ' 
     
     
 
