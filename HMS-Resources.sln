@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1145
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit", "ToolKit\ToolKit.csproj", "{B266CE83-847E-405B-A126-350A57870B4E}"
 EndProject
@@ -41,8 +41,8 @@ Global
 		{07A730B2-78B6-4F25-928F-0356F1A2A72D}.TEST|x64.Build.0 = TEST|x64
 		{EB87D946-67EF-4762-BC23-EAD7836B59A0}.PROD|x64.ActiveCfg = PROD|x64
 		{EB87D946-67EF-4762-BC23-EAD7836B59A0}.PROD|x64.Build.0 = PROD|x64
-		{EB87D946-67EF-4762-BC23-EAD7836B59A0}.TEST|x64.ActiveCfg = TEST|x64
-		{EB87D946-67EF-4762-BC23-EAD7836B59A0}.TEST|x64.Build.0 = TEST|x64
+		{EB87D946-67EF-4762-BC23-EAD7836B59A0}.TEST|x64.ActiveCfg = PROD|x64
+		{EB87D946-67EF-4762-BC23-EAD7836B59A0}.TEST|x64.Build.0 = PROD|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
