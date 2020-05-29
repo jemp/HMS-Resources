@@ -37,4 +37,3 @@ steps:
     configuration: '$(buildConfiguration)'
     publishWebProjects: false
     projects: '**/*.csproj'
-© 2020 GitHub, Inc.
