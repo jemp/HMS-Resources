@@ -43,9 +43,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="ToolKit">
-      <HintPath>..\ToolKit\bin\x64\PROD\ToolKit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Diagnostics\Exceptions.cs" />
@@ -60,7 +57,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ToolKit\ToolKit.csproj">
+      <Project>{b266ce83-847e-405b-a126-350a57870b4e}</Project>
+      <Name>ToolKit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
