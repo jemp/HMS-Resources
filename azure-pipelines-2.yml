@@ -30,10 +30,10 @@ steps:
     arguments: '/p:configuration=$(buildPlatformPipeline)   /p:Platform=$(buildConfigurationPipeline) ' 
     
     
-
-- task: DotNetCoreCLI@2
+- task: ArchiveFiles@2
   inputs:
-    command: 'publish'
-    configuration: '$(buildConfiguration)'
-    publishWebProjects: false
-    projects: '**/*.csproj'
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
