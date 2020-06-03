@@ -18,20 +18,12 @@ variables:
 steps:
 
 
-- task: NuGetCommand@2
+- task: MSBuild@1
   inputs:
-    command: 'restore'
-    restoreSolution: '**/*.sln'
-    feedsToUse: 'select'
+    solution: '**/*.sln'
+    platform: '$(buildPlatformPipeline)'
+    configuration: '$(buildConfigurationPipeline)'
 
-# ASP.NET
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.sln'
-    arguments: '/p:configuration=$(buildConfiguration)   /p:Platform=$(buildPlatform) ' 
-    
-    
 
 - task: ArchiveFiles@2
   inputs:
