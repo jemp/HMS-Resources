@@ -23,12 +23,13 @@ steps:
     restoreSolution: '**/*.sln'
     feedsToUse: 'select'
 
-
 - task: MSBuild@1
   inputs:
     solution: '**/*.sln'
     platform: '$(buildPlatformPipeline)'
     configuration: '$(buildConfigurationPipeline)'
+    msbuildArguments: '/p:OutDir="$(build.artifactstagingdirectory)"'
+    
 
 
 - task: ArchiveFiles@2
