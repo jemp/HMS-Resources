@@ -18,9 +18,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{7382B38A-1767-4F98-B77D-CF193DDB8A7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{AB0A4CF2-8B0B-41FD-B4B7-9DD758AF76BC}"
-	ProjectSection(SolutionItems) = preProject
-		FileArchiver_Arguements.txt = FileArchiver_Arguements.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File_Archiver", "File_Archiver\File_Archiver.csproj", "{EB87D946-67EF-4762-BC23-EAD7836B59A0}"
 EndProject

@@ -85,7 +85,9 @@
     <Content Include="App.config">
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
-    <Content Include="FileArchiver_Arguements.txt" />
+    <Content Include="FileArchiver_Arguements.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App.PROD.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
