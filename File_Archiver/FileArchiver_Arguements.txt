@@ -1,2 +1,1 @@
-"H:\Programs\rclone", "D:\Sync\HMS-File-Management\Drop-Stream\Home-Surveillance\Living-Room", "D:\archive-buffer","hms:/HMS-File-Management/Drop-Stream/Home-Surveillance/Living-Room","hms:/HMS-File-Management/Archive/Home-Surveillance/Living-Room","(?:LIVCAM\.)(\d{8})(?:_)(\d{6})(?:\.*)", "avi","ZIP","15"
-
+"H:\Programs\rclone" "D:\Sync\HMS-File-Management\Drop-Stream\Home-Surveillance\Living-Room" "D:\archive-buffer" "hms:/HMS-File-Management/Drop-Stream/Home-Surveillance/Living-Room" "hms:/HMS-File-Management/Archive/Home-Surveillance/Living-Room" "(?:LIVCAM\.)(\d{8})(?:_)(\d{6})(?:\.*)" "avi" "15"
