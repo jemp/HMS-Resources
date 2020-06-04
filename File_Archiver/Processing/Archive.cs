@@ -100,7 +100,7 @@ namespace File_Archiver.Processing
                 Logger.Info("Successfully deleted the local temp folder!");
 
                 ///TODO: Remove this to a later process...
-                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", localTempFolder, remoteDropStreamTarget));
+                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", rCloneDirectory, remoteDropStreamTarget));
                 CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
                 Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
 
@@ -114,7 +114,7 @@ namespace File_Archiver.Processing
 
 
                 ///Delete the cloud folder
-                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Emptying Cloud Folder", localTempFolder, Config.driveProfileName));
+                Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Emptying Cloud Folder", rCloneDirectory, Config.driveProfileName));
                 CDelete.emptyTrashFolder(rCloneDirectory, Config.driveProfileName);
                 Logger.Info("Successfully emptied cloud recycle bin");
 
