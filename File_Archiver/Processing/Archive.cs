@@ -63,7 +63,7 @@ namespace File_Archiver.Processing
                 ///Where will this zip file be located locally
                 Logger.Info("Creating Time-Stamped folders...");
                 localZipDestination = Organizer.createTimestampFolders(localDropStream, localArchiverBuffer, fileFormatNameRegex, fileExtenstion);
-                Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localTempFolder));
+                Logger.Info(String.Format("{0}: {1}", "Time-Stamped folders created! Local Zip Destination", localZipDestination));
 
                 ///Compress / Remove the folder to be archived
                 Logger.Info(String.Format("{0}: {1}", "Compress and removing target folder to the following location", localTempFolder));
