@@ -84,6 +84,7 @@ namespace File_Archiver.Processing
                 Logger.Info(String.Format("Removing any files over: {0} (GB) At remote Location: {1} Utilizing: {2}", thesholdInGigabytes, remoteArchive, info.Name));
                 List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(existingFiles,info, Double.Parse(thesholdInGigabytes));
                 Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
+                Logger.Info("Target Files: {0}", String.Concat(filesToRemove.Select(o => o.FilePath))); //Print out all of the files to remove
                 filesToRemove.ForEach(i => CDelete.deleteDirectory(rCloneDirectory, String.Format(@"{0}/{1}",remoteArchive,i.FilePath)));
                 Logger.Info("Successfully removed files over threshold! Files removed: {0} | Memory Free'd up: {1} (GB) ",filesToRemove.Count, 
                     ByteSizeLib.ByteSize.FromBytes(filesToRemove.Sum(i => i.Length)).GigaBytes, (filesToRemove.Sum(i=>i.Length)));
