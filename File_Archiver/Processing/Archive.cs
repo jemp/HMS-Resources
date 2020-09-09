@@ -48,7 +48,7 @@ namespace File_Archiver.Processing
 
             String localTempFolder = String.Empty;
             String localZipDestination =  String.Empty;
-            String commandOutput; // This is for more debugging, but ill output text that the command line returns
+            String commandOutput; // This is for more debugging, but will output text that the command line returns
 
             try
             {
