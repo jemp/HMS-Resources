@@ -17,14 +17,14 @@ namespace RClone_Manager.Commands
         /// <param name="rCloneDirectory"></param>
         /// <param name="driveTargetDirectory"></param>
         /// <returns></returns>
-        public static void deleteDirectory(String rCloneDirectory, String driveTargetDirectory)
+        public static String deleteDirectory(String rCloneDirectory, String driveTargetDirectory)
         {
             ///Timer, for diagnostics
             Stopwatch watch = Stopwatch.StartNew();
 
             ///rClone console commands
             String fullParameters = String.Format("\"{0}\"", driveTargetDirectory);
-            Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
+            return Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
   
         }
@@ -34,13 +34,13 @@ namespace RClone_Manager.Commands
         /// </summary>
         /// <param name="rCloneDirectory"></param>
         /// <param name="rCloneConfiguration"></param>
-        public static void emptyTrashFolder(String rCloneDirectory, String rCloneConfiguration)
+        public static String emptyTrashFolder(String rCloneDirectory, String rCloneConfiguration)
         {
             ///Timer, for diagnostics
             Stopwatch watch = Stopwatch.StartNew();
 
             String fullParameters = String.Format("{0}: --drive-trashed-only --drive-use-trash=false --verbose=2",rCloneConfiguration);
-            Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
+           return Shell.runRCloneShell(rCloneDirectory, "delete", fullParameters);
 
 
 

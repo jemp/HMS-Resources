@@ -48,6 +48,7 @@ namespace File_Archiver.Processing
 
             String localTempFolder = String.Empty;
             String localZipDestination =  String.Empty;
+            String commandOutput; // This is for more debugging, but ill output text that the command line returns
 
             try
             {
@@ -102,8 +103,8 @@ namespace File_Archiver.Processing
 
                 ///TODO: Remove this to a later process...
                 Logger.Info(String.Format("{0} - rCloneLocation: {1} gDriveName: {2}", "Deleting requested remote folders", rCloneDirectory, remoteDropStreamTarget));
-                CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
-                Logger.Info(String.Format("{0}", "Successfully deleted Contents!"));
+                commandOutput =  CDelete.deleteDirectory(rCloneDirectory, remoteDropStreamTarget);
+                Logger.Info(String.Format("{0} {1}", "Deletion of contents command has been ran Output:" , commandOutput));
 
 
                 ///Due to a bug, the cloud software may not "release" files. Resetting it will fix this.
