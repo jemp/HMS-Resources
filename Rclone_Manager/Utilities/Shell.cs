@@ -21,14 +21,12 @@ namespace RClone_Manager.Utilities
             ///Let's set up the command process
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = startInfo.FileName = "cmd.exe";
 
             ///Set working directory to where the rclone program is at
             startInfo.WorkingDirectory = String.Format("{0}", rCloneDirectory);
             ///Pass arguements
             startInfo.Arguments = String.Format("/C \"rclone {0} {1}", command, parameters);
-            startInfo.UseShellExecute = true;
 
             //Flags required to get an output out of the shell
             startInfo.RedirectStandardOutput = true;

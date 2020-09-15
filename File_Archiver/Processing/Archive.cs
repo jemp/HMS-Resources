@@ -48,7 +48,7 @@ namespace File_Archiver.Processing
 
             String localTempFolder = String.Empty;
             String localZipDestination =  String.Empty;
-            List<String> cmdListOutput = new List<String>(); //Output for listed group items
+ 
 
             try
             {
@@ -85,12 +85,11 @@ namespace File_Archiver.Processing
                 Logger.Info(String.Format("Removing any files over: {0} (GB) At remote Location: {1} Utilizing: {2}", thesholdInGigabytes, remoteArchive, info.Name));
                 List<FileCloudInfo> filesToRemove =    Containment.getFIlesInDirectoryOverThreshold(existingFiles,info, Double.Parse(thesholdInGigabytes));
                 Logger.Info("Now removing a total of {0} files from cloud directory: {1}", filesToRemove.Count(),remoteArchive) ;
-                Logger.Debug("Target Files: {0}", String.Concat(filesToRemove.Select(o => String.Format("{0}\n ", o.FilePath)))); //Print out all of the files to remove
+                Logger.Debug("Target Files: {0}", String.Concat(filesToRemove.Select(o => String.Format("\n{0} ", o.FilePath)))); //Print out all of the files to remove
                 
                 ///Run Command to Delete *any* target files
-                filesToRemove.ForEach(i => cmdListOutput.Add( CDelete.deleteDirectory(rCloneDirectory, String.Format(@"{0}/{1}",remoteArchive,i.FilePath))));
+                filesToRemove.ForEach(i =>  CDelete.deleteDirectory(rCloneDirectory, String.Format(@"{0}/{1}",remoteArchive,i.FilePath)));
                 ///Lots of logging, information regarding deleting items
-                Logger.Debug("Command Ouput for deletion: {0}", String.Concat(cmdListOutput.Select(o => String.Format("{0}\n ", o))));
                 Logger.Info("Ran command to removed files over threshold! Files *removed*: {0} | Memory *Free'd up*: {1} (GB) ",filesToRemove.Count, 
                 ByteSizeLib.ByteSize.FromBytes(filesToRemove.Sum(i => i.Length)).GigaBytes, (filesToRemove.Sum(i=>i.Length)));
 
